@@ -3,8 +3,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const config = require("./utils/config");
 
-//Import express middleware
 const logger = require("./utils/logger");
+//Import express middleware
+const middleware = require("./utils/middleware");
 
 const app = express();
 
@@ -17,10 +18,12 @@ mongoose.connect(url);
 // Basic Middleware
 app.use(cors());
 app.use(express.json());
+app.use(middleware.requestHandler);
 
 // Routes
 app.use();
 
 // Error handling / Unknown Endpoint middleware
+app.use(middleware.errorHandler);
 
 module.exports = app;
