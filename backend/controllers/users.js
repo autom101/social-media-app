@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 userRouter.get("/", async (request, response, next) => {
   try {
-    const users = await User.findMany({});
+    const users = await User.find({});
     response.json(users);
   } catch (error) {
     next(error);
@@ -14,9 +14,12 @@ userRouter.get("/", async (request, response, next) => {
 userRouter.post("/", async (request, response, next) => {
   try {
     const { username, name, password } = request.body;
+
     const passwordHash = await bcrypt.hash(password, 10);
-    const newUser = new User(username, name, passwordHash);
+
+    const newUser = new User({ username, name, passwordHash });
     const savedUser = await newUser.save();
+
     response.status(201).json(savedUser);
   } catch (error) {
     next(error);

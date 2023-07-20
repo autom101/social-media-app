@@ -13,7 +13,7 @@ const app = express();
 //Connect to mongoose
 const url = config.MONGODB_URI;
 mongoose.set("strictQuery", false);
-logger.informationLog(`Connecting to mongoose`);
+logger.informationLog(`Connecting to mongoose on: `, url);
 mongoose.connect(url);
 
 // Basic Middleware

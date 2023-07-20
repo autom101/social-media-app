@@ -1,4 +1,4 @@
-const informationLog = (information) => {
+const informationLog = (...information) => {
   console.log(...information);
 };
 
