@@ -25,5 +25,6 @@ app.use();
 
 // Error handling / Unknown Endpoint middleware
 app.use(middleware.errorHandler);
+app.use(middleware.unknownEndpoint);
 
 module.exports = app;
