@@ -1,6 +1,5 @@
-const requestLogger = (request, response, next) => {
-  console.log(...request);
-  next();
+const informationLog = (information) => {
+  console.log(...information);
 };
 
-module.exports = requestLogger;
+module.exports = informationLog;
