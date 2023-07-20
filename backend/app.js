@@ -4,8 +4,9 @@ const mongoose = require("mongoose");
 const config = require("./utils/config");
 
 const logger = require("./utils/logger");
-//Import express middleware
+//Import middleware
 const middleware = require("./utils/middleware");
+const userRouter = require("./controllers/users");
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(middleware.requestHandler);
 
 // Routes
-app.use();
+app.use("/api/users", userRouter);
 
 // Error handling / Unknown Endpoint middleware
 app.use(middleware.errorHandler);
