@@ -2,7 +2,7 @@ const informationLog = (...information) => {
   console.log(...information);
 };
 
-const errorLog = (information) => {
+const errorLog = (...information) => {
   console.error(...information);
 };
 

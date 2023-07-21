@@ -7,6 +7,7 @@ const logger = require("./utils/logger");
 //Import middleware
 const middleware = require("./utils/middleware");
 const userRouter = require("./controllers/users");
+const loginRouter = require("./controllers/login");
 
 const app = express();
 
@@ -23,9 +24,10 @@ app.use(middleware.requestHandler);
 
 // Routes
 app.use("/api/users", userRouter);
+app.use("/api/login", loginRouter);
 
 // Error handling / Unknown Endpoint middleware
-app.use(middleware.errorHandler);
 app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 module.exports = app;

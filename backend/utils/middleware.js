@@ -1,10 +1,11 @@
 const logger = require("./logger");
 
 const requestHandler = (request, response, next) => {
+  const { path, method, body } = request;
   logger.informationLog(`------------Begin Request Log------------`);
-  logger.informationLog(`Path: ${request.path}`);
-  logger.informationLog(`Method: ${request.method}`);
-  logger.informationLog(`Body: ${request.body}`);
+  logger.informationLog(`Path: ${path}`);
+  logger.informationLog(`Method: ${method}`);
+  logger.informationLog(`Body: `, body);
   logger.informationLog(`------------End Request Log------------`);
   next();
 };
