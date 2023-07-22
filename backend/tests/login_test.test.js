@@ -20,7 +20,7 @@ beforeEach(async () => {
 });
 
 describe("When logging in with one user in the database", () => {
-  test("client will receive 401 if an incorrect password is provided", async () => {
+  test("user will receive 401 if an incorrect password is provided", async () => {
     const user = {
       username: "user_test",
       password: "incorrect password",
@@ -29,7 +29,7 @@ describe("When logging in with one user in the database", () => {
     await api.post("/api/login").send(user).expect(401);
   });
 
-  test("users can successfully login with correct password and username", async () => {
+  test("user can successfully login with correct password and username", async () => {
     const user = {
       username: "user_test",
       password: "12345",
