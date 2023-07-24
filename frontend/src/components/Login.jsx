@@ -5,8 +5,14 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const clearForm = () => {
+    setUsername("");
+    setPassword("");
+  };
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    clearForm();
     const user = await loginService.login({ username, password });
     console.log(user);
   };
