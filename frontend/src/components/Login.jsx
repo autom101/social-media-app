@@ -1,5 +1,16 @@
+import loginService from "../services/login";
+
 const Login = () => {
-  return <div>Login</div>;
+  return (
+    <>
+      <form>
+        <label>Username: </label>
+        <input />
+        <label>Password: </label>
+        <input />
+      </form>
+    </>
+  );
 };
 
 export default Login;

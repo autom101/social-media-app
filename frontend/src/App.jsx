@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Login } from "./components";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Login, Navigation } from "./components";
 
 const App = () => {
   return (
     <Router>
+      <Navigation />
       <Routes>
         <Route path="/" element={<p>Hello, World</p>} />
         <Route path="/login" element={<Login />} />
