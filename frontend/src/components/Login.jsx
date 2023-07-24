@@ -5,9 +5,10 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    loginService.login({ username, password });
+    const user = await loginService.login({ username, password });
+    console.log(user);
   };
 
   return (
@@ -19,6 +20,7 @@ const Login = () => {
           data-cy="login-username"
           value={username}
           name="username"
+          type="text"
           onChange={(e) => {
             setUsername(e.target.value);
           }}
@@ -29,6 +31,7 @@ const Login = () => {
           data-cy="login-password"
           value={password}
           name="password"
+          type="password"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
