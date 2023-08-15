@@ -1,46 +1,48 @@
-import { useState } from "react";
 import loginService from "../services/login";
+import { useField } from "../hooks";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const username = useField("text");
+  const password = useField("text");
 
-  const clearForm = () => {
-    setUsername("");
-    setPassword("");
+  const clearForm = (params) => {
+    params.forEach((input) => {
+      input.clear();
+    });
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    clearForm();
-    const user = await loginService.login({ username, password });
+    clearForm([username, password]);
+
+    const user = await loginService.login({
+      username: username.value,
+      password: password.value,
+    });
+
     console.log(user);
   };
 
   return (
     <>
       <form onSubmit={handleLoginSubmit}>
-        <label>Username: </label>
+        <label htmlFor="username">Username: </label>
         <input
           id="username"
           data-cy="login-username"
-          value={username}
           name="username"
-          type="text"
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
+          value={username.value}
+          type={username.type}
+          onChange={username.onChange}
         />
-        <label>Password: </label>
+        <label htmlFor="password">Password: </label>
         <input
           id="password"
           data-cy="login-password"
-          value={password}
           name="password"
-          type="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+          value={password.value}
+          type={password.type}
+          onChange={password.onChange}
         />
         <button type="submit">Submit</button>
       </form>
