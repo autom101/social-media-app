@@ -11,6 +11,10 @@ beforeEach(async () => {
   //
 });
 
+test("Test", () => {
+  //
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });

@@ -1,13 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Login, Navigation } from "./components";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { Login, Navigation, Home } from "./components";
 
 const App = () => {
+  const user = useSelector((state) => state.user);
+  const { isLoggedIn } = user;
+  console.log("In App");
+
   return (
     <Router>
       <Navigation />
       <Routes>
-        <Route path="/" element={<p>Hello, World</p>} />
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/home" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </Router>
   );

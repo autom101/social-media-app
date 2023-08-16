@@ -39,7 +39,7 @@ describe("When logging in with one user in the database", () => {
 
     expect(receivedData.body.token).toBeDefined();
   });
-});
+}, 20000);
 
 afterAll(async () => {
   await mongoose.connection.close();

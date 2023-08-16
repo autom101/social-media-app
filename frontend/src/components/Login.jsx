@@ -1,26 +1,23 @@
-import loginService from "../services/login";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../reducers/userReducer";
 import { useField } from "../hooks";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const username = useField("text");
   const password = useField("text");
 
   const clearForm = (params) => {
-    params.forEach((input) => {
-      input.clear();
-    });
+    params.forEach((elem) => elem.clear());
   };
 
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    clearForm([username, password]);
-
-    const user = await loginService.login({
-      username: username.value,
-      password: password.value,
-    });
-
+    const user = { username: username.value, password: password.value };
     console.log(user);
+    clearForm([username, password]);
+    dispatch(loginUser(user));
   };
 
   return (
