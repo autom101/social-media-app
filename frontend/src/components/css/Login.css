@@ -48,18 +48,16 @@
   background-color: none;
 }
 
-.login-form input {
+.login-form #username,
+.login-form #password {
   border: none;
+  height: 100%;
+  background-color: #f1f0f5;
+  font-size: 1rem;
 }
 
 .login-form input:focus {
   outline: none;
-}
-
-.login-form #username,
-.login-form #password {
-  background-color: #f1f0f5;
-  font-size: 1rem;
 }
 
 .login-form-btn {
