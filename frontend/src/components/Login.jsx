@@ -1,5 +1,8 @@
+// Css and icon imports:
 import "./css/Login.css";
-
+import PersonIcon from "@mui/icons-material/Person";
+import LockIcon from "@mui/icons-material/Lock";
+// React and programming imports:
 import { useDispatch } from "react-redux";
 import { loginUser } from "../reducers/userReducer";
 import { useField } from "../hooks";
@@ -33,14 +36,14 @@ const Login = () => {
 
   return (
     <div className="login">
-      <div className="login-picture">Picture goes here</div>
+      <div className="login-picture"> </div>
       <form className="login-form" onSubmit={handleLoginSubmit}>
         <div className="login-form-row">
-          <label htmlFor="username">Username: </label>
+          <PersonIcon className="login-icon login-personIcon" />
           <input
             id="username"
             data-cy="login-username"
-            name="username"
+            placeholder="Username"
             value={username.value}
             type={username.type}
             onChange={username.onChange}
@@ -48,11 +51,11 @@ const Login = () => {
         </div>
 
         <div className="login-form-row">
-          <label htmlFor="password">Password: </label>
+          <LockIcon className="login-icon login-lockIcon" />
           <input
             id="password"
             data-cy="login-password"
-            name="password"
+            placeholder="password"
             value={password.value}
             type={password.type}
             onChange={password.onChange}

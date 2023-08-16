@@ -2,6 +2,7 @@
   width: 100vw;
   height: 100vh;
   display: flex;
+  font-size: 1.5rem;
 }
 
 .login-picture {
@@ -21,5 +22,37 @@
   gap: 2rem;
 }
 
+.login-form-row {
+  display: flex;
+  line-height: 1.5rem;
+  border: 1px solid black;
+}
+
+.login-icon {
+  height: 100%;
+  width: auto;
+}
+
+.login-form input {
+  border: none;
+}
+
+.login-form input:focus {
+  outline: none;
+}
+
 .login-form-btn {
+  border: none;
+  border-radius: 0.35rem;
+  background-color: #2bc48a;
+  color: white;
+
+  font-weight: 700;
+
+  height: 2.5rem;
+  width: 7rem;
+}
+
+.login-form-btn:hover {
+  cursor: pointer;
 }
