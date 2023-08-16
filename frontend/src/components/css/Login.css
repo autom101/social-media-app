@@ -2,18 +2,19 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .login-picture {
-  width: 60%;
+  width: 70%;
   height: 100%;
   border-right: 1px solid red;
 }
 
 .login-form {
-  width: 40%;
+  width: 30%;
   height: 100%;
+  background: #f9f8fd;
 
   display: flex;
   flex-direction: column;
@@ -24,13 +25,27 @@
 
 .login-form-row {
   display: flex;
-  line-height: 1.5rem;
-  border: 1px solid black;
+  align-items: center;
+  gap: 0.5rem;
+
+  height: 2.5rem;
+  line-height: 2rem;
+  border: 1px solid #c7c6cb;
+  border-radius: 0.35rem;
+
+  background-color: #f1f0f5;
+
+  font-weight: 500;
+}
+
+.login-form-row label:hover {
+  cursor: pointer;
 }
 
 .login-icon {
   height: 100%;
   width: auto;
+  background-color: none;
 }
 
 .login-form input {
@@ -41,12 +56,21 @@
   outline: none;
 }
 
+.login-form #username,
+.login-form #password {
+  background-color: #f1f0f5;
+  font-size: 1rem;
+}
+
 .login-form-btn {
   border: none;
   border-radius: 0.35rem;
+  box-shadow: 2px 2px #00000015;
+
   background-color: #2bc48a;
   color: white;
 
+  font-size: 1rem;
   font-weight: 700;
 
   height: 2.5rem;
@@ -55,4 +79,5 @@
 
 .login-form-btn:hover {
   cursor: pointer;
+  background-color: #2bc48ad0;
 }

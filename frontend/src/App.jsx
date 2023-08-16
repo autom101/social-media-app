@@ -1,4 +1,5 @@
 import "./App.css";
+import "./reset.css";
 import {
   BrowserRouter as Router,
   Routes,

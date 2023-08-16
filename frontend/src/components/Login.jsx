@@ -39,7 +39,9 @@ const Login = () => {
       <div className="login-picture"> </div>
       <form className="login-form" onSubmit={handleLoginSubmit}>
         <div className="login-form-row">
-          <PersonIcon className="login-icon login-personIcon" />
+          <label htmlFor="username">
+            <PersonIcon className="login-icon login-personIcon" />
+          </label>
           <input
             id="username"
             data-cy="login-username"
@@ -51,20 +53,24 @@ const Login = () => {
         </div>
 
         <div className="login-form-row">
-          <LockIcon className="login-icon login-lockIcon" />
+          <label htmlFor="password">
+            <LockIcon className="login-icon login-lockIcon" />
+          </label>
           <input
             id="password"
             data-cy="login-password"
-            placeholder="password"
+            placeholder="Password"
             value={password.value}
             type={password.type}
             onChange={password.onChange}
           />
         </div>
 
-        <button className="login-form-btn" type="submit">
-          Submit
-        </button>
+        <div className="login-form-row">
+          <button className="login-form-btn" type="submit">
+            Login
+          </button>
+        </div>
       </form>
     </div>
   );
