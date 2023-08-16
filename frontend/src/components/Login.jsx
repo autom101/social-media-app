@@ -1,3 +1,5 @@
+import "./css/Login.css";
+
 import { useDispatch } from "react-redux";
 import { loginUser } from "../reducers/userReducer";
 import { useField } from "../hooks";
@@ -30,29 +32,38 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="login">
+      <div className="login-picture">Picture goes here</div>
       <form className="login-form" onSubmit={handleLoginSubmit}>
-        <label htmlFor="username">Username: </label>
-        <input
-          id="username"
-          data-cy="login-username"
-          name="username"
-          value={username.value}
-          type={username.type}
-          onChange={username.onChange}
-        />
-        <label htmlFor="password">Password: </label>
-        <input
-          id="password"
-          data-cy="login-password"
-          name="password"
-          value={password.value}
-          type={password.type}
-          onChange={password.onChange}
-        />
-        <button type="submit">Submit</button>
+        <div className="login-form-row">
+          <label htmlFor="username">Username: </label>
+          <input
+            id="username"
+            data-cy="login-username"
+            name="username"
+            value={username.value}
+            type={username.type}
+            onChange={username.onChange}
+          />
+        </div>
+
+        <div className="login-form-row">
+          <label htmlFor="password">Password: </label>
+          <input
+            id="password"
+            data-cy="login-password"
+            name="password"
+            value={password.value}
+            type={password.type}
+            onChange={password.onChange}
+          />
+        </div>
+
+        <button className="login-form-btn" type="submit">
+          Submit
+        </button>
       </form>
-    </>
+    </div>
   );
 };
 
