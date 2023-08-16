@@ -29,9 +29,7 @@ loginRouter.post("/", async (request, response, next) => {
       username: username,
     };
     //Since user exists and password is correct, send a token that expires in 24 hrs from time of issue
-    const token = jwt.sign(tokenUser, config.SECRET_STRING, {
-      expiresIn: 86400,
-    });
+    const token = jwt.sign(tokenUser, config.SECRET_STRING);
 
     return response
       .status(201)
