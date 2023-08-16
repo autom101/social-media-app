@@ -8,6 +8,7 @@ const initialState =
     ? { isLoggedIn: true, user: JSON.parse(user) }
     : { isLoggedIn: false, user: null };
 
+/* Defines the reducer and action creaters for the user state. Is mainly used to check if user is already logged in, and to update the user value upon successful or unsuccessful logins. */
 const userReducer = createSlice({
   name: "user",
   initialState,

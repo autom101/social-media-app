@@ -5,9 +5,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import { Login, Navigation, Home } from "./components";
 
+/* Contains various routes that load different components based on the url.
+
+When someone visits the page, the home page will load if logged in and the login page if not logged in.*/
 const App = () => {
   const user = useSelector((state) => state.user);
   const { isLoggedIn } = user;

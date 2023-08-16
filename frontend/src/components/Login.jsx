@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
 import { loginUser } from "../reducers/userReducer";
 import { useField } from "../hooks";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const username = useField("text");
   const password = useField("text");
@@ -12,12 +14,17 @@ const Login = () => {
     params.forEach((elem) => elem.clear());
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const user = { username: username.value, password: password.value };
     console.log(user);
     clearForm([username, password]);
-    dispatch(loginUser(user));
+    try {
+      dispatch(loginUser(user));
+      navigate("/home");
+    } catch (error) {
+      console.log("Error from: ");
+    }
   };
 
   return (
