@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const username = useField("text");
-  const password = useField("text");
+  const password = useField("password");
 
   const clearForm = (params) => {
     params.forEach((elem) => elem.clear());
@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={handleLoginSubmit}>
+      <form className="login-form" onSubmit={handleLoginSubmit}>
         <label htmlFor="username">Username: </label>
         <input
           id="username"

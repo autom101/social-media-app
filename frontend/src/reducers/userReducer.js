@@ -2,13 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import loginService from "../services/login";
 
 const user = localStorage.getItem("user");
-console.log(user);
 
 const initialState =
   user !== null && JSON.parse(user) !== null
     ? { isLoggedIn: true, user: JSON.parse(user) }
     : { isLoggedIn: false, user: null };
-console.log(initialState);
 
 /* Defines the reducer and action creaters for the user state. Is mainly used to check if user is already logged in, and to update the user value upon successful or unsuccessful logins. */
 const userReducer = createSlice({
@@ -29,6 +27,7 @@ const userReducer = createSlice({
 
 export const { updateUser, modifyIsLoggedIn } = userReducer.actions;
 
+/* Attempt to login user. Update local state to a user object if successful, or null if not successful */
 export const loginUser = (user) => {
   return async (dispatch) => {
     try {
