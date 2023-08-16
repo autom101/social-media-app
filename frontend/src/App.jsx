@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Login, Navigation, Home } from "./components";
+import { Login, Home } from "./components";
 
 /* Contains various routes that load different components based on the url.
 
@@ -16,7 +16,6 @@ const App = () => {
 
   return (
     <Router>
-      <Navigation />
       <Routes>
         <Route
           path="/"
