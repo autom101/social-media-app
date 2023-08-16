@@ -14,7 +14,9 @@ const userReducer = createSlice({
   initialState,
   reducers: {
     updateUser(state, action) {
-      return { ...state, user: action.payload };
+      const userObj = action.payload;
+      localStorage.setItem("user", JSON.stringify(userObj));
+      return { ...state, user: userObj };
     },
     modifyIsLoggedIn(state, action) {
       return { ...state, isLoggedIn: action.payload };
@@ -28,12 +30,13 @@ export const loginUser = (user) => {
   return async (dispatch) => {
     try {
       const userReturned = await loginService.login(user);
-      console.log("Successfully logged in:");
       dispatch(updateUser(userReturned));
       dispatch(modifyIsLoggedIn(true));
+      return true;
     } catch (error) {
-      console.log(error);
+      dispatch(updateUser(""));
       dispatch(modifyIsLoggedIn(false));
+      return false;
     }
   };
 };

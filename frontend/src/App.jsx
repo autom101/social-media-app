@@ -13,7 +13,6 @@ When someone visits the page, the home page will load if logged in and the login
 const App = () => {
   const user = useSelector((state) => state.user);
   const { isLoggedIn } = user;
-  console.log("In App");
 
   return (
     <Router>

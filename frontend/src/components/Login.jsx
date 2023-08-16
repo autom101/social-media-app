@@ -19,11 +19,13 @@ const Login = () => {
     const user = { username: username.value, password: password.value };
     console.log(user);
     clearForm([username, password]);
-    try {
-      dispatch(loginUser(user));
+    let success = await dispatch(loginUser(user));
+
+    if (success) {
+      console.log("successful login");
       navigate("/home");
-    } catch (error) {
-      console.log("Error from: ");
+    } else {
+      console.log("failed login");
     }
   };
 
