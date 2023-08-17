@@ -1,10 +1,14 @@
 import "./css/Home.css";
-import { Navigation } from "../components";
-
+import { Routes, Route } from "react-router-dom";
+import { Header, PostsList, Sidebar } from "../components";
 const Home = () => {
   return (
     <div id="home">
-      <Navigation />
+      <Header />
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<PostsList />} />
+      </Routes>
     </div>
   );
 };
