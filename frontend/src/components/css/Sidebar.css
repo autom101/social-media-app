@@ -1,0 +1,23 @@
+.sidebar {
+  background-color: #00a89d;
+  color: #fefefe;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 3rem;
+  padding: 3rem 1rem;
+
+  font-weight: 1000;
+  font-size: 1.5rem;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
