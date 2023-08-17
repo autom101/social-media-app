@@ -1,14 +1,18 @@
 import "./css/Home.css";
 import { Routes, Route } from "react-router-dom";
-import { Header, PostsList, Sidebar } from "../components";
+import { Header, PostsList, Post, Sidebar } from "../components";
+
 const Home = () => {
   return (
     <div id="home">
       <Header />
       <Sidebar />
-      <Routes>
-        <Route path="/" element={<PostsList />} />
-      </Routes>
+      <div className="view">
+        <Routes>
+          <Route path="/" element={<PostsList />} />
+          <Route path="/:id" element={<Post />} />
+        </Routes>
+      </div>
     </div>
   );
 };

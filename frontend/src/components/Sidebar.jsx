@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
-const Navigation = () => {
+const Sidebar = () => {
   return (
-    <div>
+    <div className="sidebar">
       <Link to="/home">Home </Link>
       <Link to="/login">Login</Link>
     </div>
   );
 };
 
-export default Navigation;
+export default Sidebar;
