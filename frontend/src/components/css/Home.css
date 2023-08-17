@@ -6,13 +6,14 @@
 
   display: grid;
   grid-template-columns: 1fr 5fr;
-  grid-template-rows: 3rem 1fr;
-  grid-template-areas: "sidebar header" "sidebar view";
+  grid-template-rows: 4rem 1fr;
+  grid-template-areas: "header header" "sidebar view";
+
+  position: relative;
 }
 
 .header {
   grid-area: header;
-  border-bottom: 1px solid snow;
 }
 
 .sidebar {

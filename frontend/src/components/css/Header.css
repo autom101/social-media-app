@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 1rem;
+
+  background-color: #00a89d;
+
+  font-weight: 1000;
+  color: #fefefe;
+}
+
+.header h1 {
+  font-size: 2rem;
+  background: -webkit-linear-gradient(#ec4899, #fb7185);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-avatar {
+  height: 2.5rem;
+  width: auto;
+}
+
+.header-avatar:hover {
+  cursor: pointer;
+}
