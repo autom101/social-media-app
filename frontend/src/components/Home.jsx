@@ -1,6 +1,14 @@
 import "./css/Home.css";
 import { Routes, Route } from "react-router-dom";
-import { Header, PostsList, Post, Sidebar } from "../components";
+import {
+  Header,
+  Sidebar,
+  PostsList,
+  Post,
+  MyPosts,
+  SavedPosts,
+  Settings,
+} from "../components";
 
 const Home = () => {
   return (
@@ -11,6 +19,9 @@ const Home = () => {
         <Routes>
           <Route path="/" element={<PostsList />} />
           <Route path="/:id" element={<Post />} />
+          <Route path="/myposts" element={<MyPosts />} />
+          <Route path="/saved" element={<SavedPosts />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </div>

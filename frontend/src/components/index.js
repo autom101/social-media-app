@@ -4,3 +4,6 @@ export { default as Home } from "./Home.jsx";
 export { default as PostsList } from "./PostsList.jsx";
 export { default as Post } from "./Post.jsx";
 export { default as Header } from "./Header.jsx";
+export { default as MyPosts } from "./MyPosts.jsx";
+export { default as SavedPosts } from "./SavedPosts.jsx";
+export { default as Settings } from "./Settings.jsx";
