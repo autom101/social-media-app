@@ -1,8 +1,10 @@
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import { Link } from "react-router-dom";
 import "./css/Header.css";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const user = useSelector((state) => state.user.user);
   return (
     <div className="header">
       <h1>
@@ -10,7 +12,10 @@ const Header = () => {
           Apppppppp
         </Link>
       </h1>
-      <PersonSharpIcon className="header-avatar" />
+      <div className="person">
+        <h2>{user.name}</h2>
+        <PersonSharpIcon className="header-avatar" />
+      </div>
     </div>
   );
 };
