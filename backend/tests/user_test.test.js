@@ -30,6 +30,18 @@ test("check that testing_username exists in the database and is the only user", 
   expect(users).toHaveLength(1);
 }, 10000);
 
+describe("with one user, testing_username, in the database", () => {
+  test("attempts to create a user with a non-unique username fails", async () => {
+    const user = {
+      name: "new_user",
+      username: "testing_username",
+      password: "lalalalala",
+    };
+
+    await api.post("/api/users").send(user).expect(400);
+  });
+}, 20000);
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
