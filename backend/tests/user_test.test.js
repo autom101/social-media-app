@@ -28,7 +28,7 @@ test("check that testing_username exists in the database and is the only user", 
 
   const users = result.body;
   expect(users).toHaveLength(1);
-}, 20000);
+}, 10000);
 
 afterAll(async () => {
   await mongoose.connection.close();
