@@ -15,6 +15,12 @@ userRouter.post("/", async (request, response, next) => {
   try {
     const { username, name, password } = request.body;
 
+    if (!password) {
+      return response
+        .status(400)
+        .json({ error: "A password must be provided" });
+    }
+
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
 
     if (!password.match(passwordRegex)) {
