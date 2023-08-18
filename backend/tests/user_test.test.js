@@ -64,6 +64,27 @@ describe("with one user, testing_username, in the database", () => {
     await api.post("/api/users").send(missingNumber).expect(400);
     await api.post("/api/users").send(missingLetter).expect(400);
   });
+
+  test("attempt to create a user with a good username and password succeeds", async () => {
+    const goodUser = {
+      name: "new_user",
+      username: "username :)",
+      password: "1bcdefg123",
+    };
+
+    const prevUserCount = (await User.find({})).length;
+
+    const response = await api
+      .post("/api/users")
+      .send(goodUser)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
+
+    const returnedUser = response.body;
+    const users = await User.find({});
+    expect(users).toHaveLength(prevUserCount + 1);
+    expect(returnedUser.username).toBe("username :)");
+  });
 }, 20000);
 
 afterAll(async () => {
