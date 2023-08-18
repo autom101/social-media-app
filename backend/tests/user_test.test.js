@@ -30,7 +30,7 @@ test("check that testing_username exists in the database and is the only user", 
   expect(users).toHaveLength(1);
 }, 10000);
 
-describe("with one user, testing_username, in the database", () => {
+describe("when testing the user validation of the app:", () => {
   test("attempt to create a user with no username, no name, or no password fails", async () => {
     const noUsername = {
       name: "new_user",

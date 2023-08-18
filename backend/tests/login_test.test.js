@@ -19,7 +19,7 @@ beforeEach(async () => {
   await newUser.save();
 });
 
-describe("When logging in with one user in the database", () => {
+describe("when logging in with one user in the database", () => {
   test("user will receive 401 if an incorrect password is provided", async () => {
     const user = {
       username: "user_test",
