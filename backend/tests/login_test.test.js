@@ -10,7 +10,7 @@ const api = supertest(app);
 beforeEach(async () => {
   //Have to empty db and create a user before running any tests.
   await User.deleteMany({});
-  const passwordHash = await bcrypt.hash("12345", 10);
+  const passwordHash = await bcrypt.hash("Password123", 10);
   const newUser = new User({
     username: "user_test",
     name: "test user",
@@ -32,7 +32,7 @@ describe("When logging in with one user in the database", () => {
   test("user can successfully login with correct password and username", async () => {
     const user = {
       username: "user_test",
-      password: "12345",
+      password: "Password123",
     };
 
     const receivedData = await api.post("/api/login").send(user).expect(201);
