@@ -31,6 +31,27 @@ test("check that testing_username exists in the database and is the only user", 
 }, 10000);
 
 describe("with one user, testing_username, in the database", () => {
+  test("attempt to create a user with no username, no name, or no password fails", async () => {
+    const noUsername = {
+      name: "new_user",
+      password: "12345678A",
+    };
+
+    const noName = {
+      username: "testing_username",
+      password: "12345678A",
+    };
+
+    const noPassword = {
+      name: "new_user",
+      username: "testing_username",
+    };
+
+    await api.post("/api/users").send(noUsername).expect(400);
+    await api.post("/api/users").send(noName).expect(400);
+    await api.post("/api/users").send(noPassword).expect(400);
+  });
+
   test("attempt to create a user with a non-unique username fails", async () => {
     const user = {
       name: "new_user",
@@ -38,7 +59,7 @@ describe("with one user, testing_username, in the database", () => {
       password: "12345678A",
     };
 
-    const response = await api.post("/api/users").send(user).expect(400);
+    await api.post("/api/users").send(user).expect(400);
   });
 
   test("attempt to create a user with a bad password fails", async () => {
