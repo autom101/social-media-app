@@ -10,6 +10,10 @@ const requestHandler = (request, response, next) => {
   next();
 };
 
+const unknownEndpoint = (error, request, response, next) => {
+  return response.status(404).send({ error: "unknown endpoint" });
+};
+
 const errorHandler = (error, request, response, next) => {
   logger.errorLog(error);
   if (error.name === "ValidationError") {
@@ -18,8 +22,4 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-const unknownEndpoint = (error, request, response, next) => {
-  return response.status(404).send({ error: "unknown endpoint" });
-};
-
-module.exports = { requestHandler, errorHandler, unknownEndpoint };
+module.exports = { requestHandler, unknownEndpoint, errorHandler };
