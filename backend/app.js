@@ -24,9 +24,10 @@ app.use(express.json());
 app.use(middleware.requestHandler);
 
 // Routes
-app.use("/api/users", userRouter);
-app.use("/api/posts", postRouter);
 app.use("/api/login", loginRouter);
+app.use(middleware.tokenExtractor);
+app.use("/api/users", userRouter);
+app.use("/api/posts", middleware.userExtractor, postRouter);
 
 // Error handling / Unknown Endpoint middleware
 app.use(middleware.errorHandler);
