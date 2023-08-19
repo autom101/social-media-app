@@ -8,6 +8,7 @@ const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
 const userRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const postRouter = require("./controllers/posts");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(middleware.requestHandler);
 
 // Routes
 app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
 app.use("/api/login", loginRouter);
 
 // Error handling / Unknown Endpoint middleware
