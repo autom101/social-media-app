@@ -13,7 +13,7 @@ userRouter.get("/", async (request, response, next) => {
 
 userRouter.get("/:id/posts", async (request, response, next) => {
   try {
-    const { posts } = await User.findOne(request.params.id).populate("posts");
+    const { posts } = await User.findById(request.params.id).populate("posts");
     return response.json(posts);
   } catch (error) {
     next(error);
