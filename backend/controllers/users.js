@@ -11,6 +11,15 @@ userRouter.get("/", async (request, response, next) => {
   }
 });
 
+userRouter.get("/:id/posts", async (request, response, next) => {
+  try {
+    const { posts } = await User.findOne(request.params.id).populate("posts");
+    return response.json(posts);
+  } catch (error) {
+    next(error);
+  }
+});
+
 userRouter.post("/", async (request, response, next) => {
   try {
     const { username, name, password } = request.body;
