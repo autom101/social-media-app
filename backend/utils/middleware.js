@@ -12,7 +12,7 @@ const requestHandler = (request, response, next) => {
   next();
 };
 
-const tokenExtractor = (request) => {
+const tokenExtractor = (request, response, next) => {
   const authorization = request.get("authorization");
   const authScheme = "Bearer ";
   let token = null;
