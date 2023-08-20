@@ -36,7 +36,7 @@ postCommentRouter.post("/", async (request, response, next) => {
     post.comments = { ...comments, savedComment };
     const savedPost = await post.save();
 
-    return response.json(savedPost);
+    return response.status(201).json(savedPost);
   } catch (error) {
     next(error);
   }
