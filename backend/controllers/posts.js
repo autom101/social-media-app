@@ -13,11 +13,6 @@ postRouter.get("/", async (request, response, next) => {
 postRouter.post("/", async (request, response, next) => {
   try {
     const user = request.user;
-    if (!user || user === null) {
-      return response
-        .status(403)
-        .json({ error: "You must be logged in to create a post." });
-    }
 
     const newPost = new Post({
       title: request.title,
