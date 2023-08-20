@@ -30,6 +30,12 @@ const postSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  edited: {
+    type: Boolean,
+  },
+  editedAt: {
+    type: Date,
+  },
 });
 
 postSchema.plugin(uniqueValidator);
