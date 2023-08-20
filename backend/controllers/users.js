@@ -20,6 +20,17 @@ userRouter.get("/:id/posts", async (request, response, next) => {
   }
 });
 
+userRouter.get("/:id/savedPosts", async (request, response, next) => {
+  try {
+    const { savedPosts } = await User.findById(request.params.id).populate(
+      "savedPosts"
+    );
+    return response.json(savedPosts);
+  } catch (error) {
+    next(error);
+  }
+});
+
 userRouter.post("/", async (request, response, next) => {
   try {
     const { username, name, password } = request.body;

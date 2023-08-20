@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
-  saved: [
+  savedPosts: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
