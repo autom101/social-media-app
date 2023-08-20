@@ -7,6 +7,10 @@ const commentSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   edited: {
     type: Boolean,
   },
