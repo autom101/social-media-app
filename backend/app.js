@@ -9,6 +9,7 @@ const middleware = require("./utils/middleware");
 const userRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const postRouter = require("./controllers/posts");
+const postCommentRouter = require("./controllers/postComments");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/login", loginRouter);
 app.use(middleware.tokenExtractor);
 app.use("/api/users", userRouter);
 app.use("/api/posts", middleware.userExtractor, postRouter);
+app.use("/api/posts/:postId/postComments", postCommentRouter);
 
 // Error handling / Unknown Endpoint middleware
 app.use(middleware.errorHandler);
