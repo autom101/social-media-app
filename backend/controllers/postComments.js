@@ -42,4 +42,25 @@ postCommentRouter.post("/", async (request, response, next) => {
   }
 });
 
+postCommentRouter.put("/:commentId", async (request, response, next) => {
+  try {
+    const commentId = request.params.commentId;
+    const updateInformation = request.body;
+
+    const newComment = await Comment.findByIdAndUpdate(
+      commentId,
+      updateInformation,
+      {
+        new: true,
+        runValidators: true,
+        context: "query",
+      }
+    );
+
+    return response.status(201).json(newComment);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = postCommentRouter;
