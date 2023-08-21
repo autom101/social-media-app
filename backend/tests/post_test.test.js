@@ -10,13 +10,17 @@ const Comment = require("../models/comment");
 
 const api = supertest(app);
 
-// beforeEach(async () => {
-//   await testHelper.clearDatabase();
-//   await testHelper.createDummyUser();
-// });
+beforeEach(async () => {
+  await testHelper.clearDatabase();
+  await testHelper.createDummyUser();
+});
 
-// describe();
+describe("", () => {
+  test("attempt to get posts without being logged in fails", async () => {
+    await api.get("/api/posts").expect(401);
+  });
+}, 20000);
 
-// afterAll(async () => {
-//   await mongoose.connection.close();
-// });
+afterAll(async () => {
+  await mongoose.connection.close();
+});
