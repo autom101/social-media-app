@@ -1,23 +1,15 @@
-const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
-
+const testHelper = require("./test_helper");
 const User = require("../models/user");
 
 const api = supertest(app);
 
 //Empty database and initialize a test user.
 beforeEach(async () => {
-  await User.deleteMany({});
-  const passwordHash = await bcrypt.hash("Password123!", 10);
-  const user = new User({
-    name: "testing_user",
-    username: "testing_username",
-    passwordHash,
-  });
-
-  await user.save();
+  await testHelper.clearDatabase();
+  await testHelper.createDummyUser();
 });
 
 test("check that testing_username exists in the database and is the only user", async () => {

@@ -2,18 +2,21 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
+const testHelper = require("./test_helper");
 
 const User = require("../models/user");
 const Post = require("../models/post");
+const Comment = require("../models/comment");
 
 const api = supertest(app);
 
-beforeEach(async () => {
-  //...
-});
+// beforeEach(async () => {
+//   await testHelper.clearDatabase();
+//   await testHelper.createDummyUser();
+// });
 
-describe();
+// describe();
 
-afterAll(async () => {
-  await mongoose.connection.close();
-});
+// afterAll(async () => {
+//   await mongoose.connection.close();
+// });
