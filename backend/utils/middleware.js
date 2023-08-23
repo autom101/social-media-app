@@ -20,19 +20,24 @@ const tokenExtractor = (request, response, next) => {
     token = authorization.replace(authScheme, "");
   }
   request.token = token;
+
   next();
 };
 
 const userExtractor = async (request, response, next) => {
-  if (request.token) {
-    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+  const token = request.token || "";
+  console.log("In user extractor");
+  try {
+    const decodedToken = jwt.verify(token, process.env.SECRET);
     if (decodedToken.username) {
       const user = await User.findOne({ username: decodedToken.username });
       request.user = user;
-    } else {
-      return response.status(401).json({ error: "invalid token" });
     }
+    console.log("Decoded: ", decodedToken);
+  } catch (error) {
+    return response.status(401).json({ error: "Invalid token" });
   }
+
   next();
 };
 

@@ -28,7 +28,8 @@ app.use(middleware.requestHandler);
 app.use("/api/login", loginRouter);
 app.use(middleware.tokenExtractor);
 app.use("/api/users", userRouter);
-app.use("/api/posts", middleware.userExtractor, postRouter);
+app.use(middleware.userExtractor);
+app.use("/api/posts", postRouter);
 app.use("/api/posts/:postId/postComments", postCommentRouter);
 
 // Error handling / Unknown Endpoint middleware
