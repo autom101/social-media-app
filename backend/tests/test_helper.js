@@ -3,6 +3,12 @@ const Post = require("../models/post");
 const Comment = require("../models/comment");
 const bcrypt = require("bcrypt");
 
+const dummyUserObject = {
+  name: "testing_user",
+  username: "testing_username",
+  password: "Password123!",
+};
+
 const clearDatabase = async () => {
   await User.deleteMany({});
   await Post.deleteMany({});
@@ -10,12 +16,9 @@ const clearDatabase = async () => {
 };
 
 const createDummyUser = async () => {
-  const passwordHash = await bcrypt.hash("Password123!", 10);
-  const user = new User({
-    name: "testing_user",
-    username: "testing_username",
-    passwordHash,
-  });
+  const { name, username, password } = dummyUserObject;
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = new User({ name, username, passwordHash });
   return user.save();
 };
 
