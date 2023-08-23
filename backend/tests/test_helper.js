@@ -22,4 +22,4 @@ const createDummyUser = async () => {
   return user.save();
 };
 
-module.exports = { clearDatabase, createDummyUser };
+module.exports = { dummyUserObject, clearDatabase, createDummyUser };
