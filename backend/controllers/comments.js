@@ -1,11 +1,16 @@
-const postCommentRouter = require("express").Router();
+const commentRouter = require("express").Router();
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 
-postCommentRouter.get("/", async (request, response, next) => {
+commentRouter.get("/", async (request, response, next) => {
   try {
     const id = request.params.postId;
-    const post = await Post.findById(id).populate("comments");
+    const post = await Post.findById(id).populate({
+      path: "comments",
+      populate: {
+        path: "childComments",
+      },
+    });
     const { comments } = post;
 
     return response.json(comments);
@@ -16,7 +21,7 @@ postCommentRouter.get("/", async (request, response, next) => {
 
 //Extract comments array from post, then create a new comment and add it to the comment collection. Then, add the saved comment to post's comments Array and save that in the post collection.
 
-postCommentRouter.post("/", async (request, response, next) => {
+commentRouter.post("/", async (request, response, next) => {
   try {
     const id = request.params.postId;
     const post = await Post.findById(id).populate("comments");
@@ -44,7 +49,7 @@ postCommentRouter.post("/", async (request, response, next) => {
   }
 });
 
-postCommentRouter.post("/:subCommentId", async (request, response, next) => {
+commentRouter.post("/:subCommentId", async (request, response, next) => {
   try {
     const id = request.params.subCommentId;
     const parentComment = await Comment.findById(id).populate("childComments");
@@ -75,7 +80,7 @@ postCommentRouter.post("/:subCommentId", async (request, response, next) => {
   }
 });
 
-postCommentRouter.put("/:commentId", async (request, response, next) => {
+commentRouter.put("/:commentId", async (request, response, next) => {
   try {
     const commentId = request.params.commentId;
     const updateInformation = request.body;
@@ -96,4 +101,4 @@ postCommentRouter.put("/:commentId", async (request, response, next) => {
   }
 });
 
-module.exports = postCommentRouter;
+module.exports = commentRouter;
