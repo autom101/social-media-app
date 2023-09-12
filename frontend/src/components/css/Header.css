@@ -27,8 +27,12 @@
   font-size: 1.25rem;
 }
 
-.header-avatar {
-  height: 2.5rem;
+.header .person h2 {
+  line-height: 100%;
+}
+
+.header .header-avatar {
+  height: 3rem;
   width: auto;
 }
 
