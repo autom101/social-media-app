@@ -23,9 +23,11 @@ postCommentRouter.post("/", async (request, response, next) => {
     const { comments } = post;
 
     const newComment = new Comment({
+      author: request.user,
+      parentComment: null,
+      childComments: [],
       content: request.content,
       createdAt: new Date().getTime(),
-      author: request.user,
       edited: false,
       editedAt: null,
       likes: 0,
@@ -49,9 +51,11 @@ postCommentRouter.post("/:subCommentId", async (request, response, next) => {
     const { childComments } = parentComment;
 
     const newComment = new Comment({
+      author: request.user,
+      parentComment: parentComment,
+      childComments: [],
       content: request.content,
       createdAt: new Date().getTime(),
-      author: request.user,
       edited: false,
       editedAt: null,
       likes: 0,

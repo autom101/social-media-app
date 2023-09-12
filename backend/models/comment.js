@@ -1,15 +1,31 @@
 const mongoose = require("mongoose");
 
+/* 
+Comments have both an author field, and a parentComment field
+
+If a comment has a null parentComment field, that means that it is not replying to a comment, and is standalone.
+
+A comment should never have a null author field.
+*/
+
 const commentSchema = new mongoose.Schema({
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  parentComment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment",
+  },
+  childComments: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment",
+  },
   content: {
     type: String,
   },
   createdAt: {
     type: Date,
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
   },
   edited: {
     type: Boolean,
@@ -19,10 +35,6 @@ const commentSchema = new mongoose.Schema({
   },
   likes: {
     type: Number,
-  },
-  childComments: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Comment",
   },
 });
 
