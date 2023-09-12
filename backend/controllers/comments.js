@@ -42,6 +42,35 @@ postCommentRouter.post("/", async (request, response, next) => {
   }
 });
 
+postCommentRouter.post("/:subCommentId", async (request, response, next) => {
+  try {
+    const id = request.params.subCommentId;
+    const parentComment = await Comment.findById(id).populate("childComments");
+    const { childComments } = parentComment;
+
+    const newComment = new Comment({
+      content: request.content,
+      createdAt: new Date().getTime(),
+      author: request.user,
+      edited: false,
+      editedAt: null,
+      likes: 0,
+    });
+
+    const savedNewChildComment = await newComment.save();
+
+    parentComment.comments = {
+      ...childComments,
+      savedNewChildComment,
+    };
+    const savedParentComment = await parentComment.save();
+
+    return response.status(201).json(savedParentComment);
+  } catch (error) {
+    next(error);
+  }
+});
+
 postCommentRouter.put("/:commentId", async (request, response, next) => {
   try {
     const commentId = request.params.commentId;
