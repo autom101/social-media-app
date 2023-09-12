@@ -20,6 +20,10 @@ const commentSchema = new mongoose.Schema({
   likes: {
     type: Number,
   },
+  childComments: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment",
+  },
 });
 
 commentSchema.set("toJSON", {
