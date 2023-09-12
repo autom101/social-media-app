@@ -15,7 +15,7 @@ postRouter.post("/", async (request, response, next) => {
     const user = request.user;
 
     const newPost = new Post({
-      title: request.title,
+      title: request.body.title,
       author: user,
       createdAt: new Date().getTime(),
       comments: [],
