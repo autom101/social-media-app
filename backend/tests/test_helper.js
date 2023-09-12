@@ -22,4 +22,17 @@ const createDummyUser = async () => {
   return user.save();
 };
 
-module.exports = { dummyUserObject, clearDatabase, createDummyUser };
+const createDummyPost = async (api, token, postObj) => {
+  const response = await api
+    .post("/api/posts")
+    .set("Authorization", "Bearer " + token)
+    .send(postObj);
+  return response.body;
+};
+
+module.exports = {
+  dummyUserObject,
+  clearDatabase,
+  createDummyUser,
+  createDummyPost,
+};
