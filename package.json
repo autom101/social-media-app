@@ -1,0 +1,20 @@
+{
+  "name": "social-media-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "precommit-msg": "echo 'Running precommit...' && exit 0",
+    "test": "cd ./backend && npm run test"
+  },
+  "precommit": [
+    "precommit-msg",
+    "test"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pre-commit": "^1.2.2"
+  }
+}

@@ -52,6 +52,11 @@ describe("When a user, testing_user, is logged in", () => {
 
     const body = response.body;
     expect(body).toBeDefined();
+    expect(1).toBe(2);
+  });
+
+  test("a user can post a comment on an existing post", async () => {
+    //
   });
 }, 20000);
 
