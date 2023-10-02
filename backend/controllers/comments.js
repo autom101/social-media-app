@@ -4,16 +4,17 @@ const Post = require("../models/post");
 
 commentRouter.get("/", async (request, response, next) => {
   try {
-    const id = request.params.postId;
-    const post = await Post.findById(id).populate({
+    const params = request.params;
+    console.log("Params: ", params);
+
+    const post = await Post.findById(params.postId).populate({
       path: "comments",
       populate: {
         path: "childComments",
       },
     });
-    const { comments } = post;
 
-    return response.json(comments);
+    return response.json(post.comments);
   } catch (error) {
     next(error);
   }

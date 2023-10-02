@@ -14,6 +14,7 @@ userRouter.get("/", async (request, response, next) => {
 userRouter.get("/:id/posts", async (request, response, next) => {
   try {
     const { posts } = await User.findById(request.params.id).populate("posts");
+    console.log("in correct place");
     return response.json(posts);
   } catch (error) {
     next(error);
