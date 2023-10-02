@@ -39,7 +39,6 @@ commentRouter.post("/", async (request, response, next) => {
     const newComment = new Comment({
       author: request.user,
       parentComment: null,
-      childComments: [],
       content: request.content,
       createdAt: new Date().getTime(),
       edited: false,
@@ -49,10 +48,10 @@ commentRouter.post("/", async (request, response, next) => {
 
     const savedComment = await newComment.save();
 
-    post.comments = { ...comments, savedComment };
+    post.comments = [...comments, savedComment];
     const savedPost = await post.save();
 
-    return response.status(201).json(savedPost);
+    return response.status(201).json(savedComment);
   } catch (error) {
     next(error);
   }
