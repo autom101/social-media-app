@@ -66,7 +66,6 @@ commentRouter.post("/:subCommentId", async (request, response, next) => {
     const newComment = new Comment({
       author: request.user,
       parentComment: parentComment,
-      childComments: [],
       content: request.content,
       createdAt: new Date().getTime(),
       edited: false,
@@ -76,10 +75,7 @@ commentRouter.post("/:subCommentId", async (request, response, next) => {
 
     const savedNewChildComment = await newComment.save();
 
-    parentComment.comments = {
-      ...childComments,
-      savedNewChildComment,
-    };
+    parentComment.childComments = [...childComments, savedNewChildComment];
     const savedParentComment = await parentComment.save();
 
     return response.status(201).json(savedParentComment);

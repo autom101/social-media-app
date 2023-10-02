@@ -41,25 +41,17 @@ describe("When a user, testing_user, is logged in", () => {
       .set("Authorization", `Bearer ${tokenObj.token}`)
       .expect(200);
 
-    expect(post.body).toBeDefined();
-
-    /*
-      Route: /api/posts/:postId/comments
-    */
+    const postBody = post.body[0];
+    console.log(postBody);
+    expect(postBody).toBeDefined();
 
     const response = await api
-      .get(`/api/posts/${post.body.id}/comments`)
+      .get(`/api/posts/${postBody.id}/comments`)
       .set("Authorization", `Bearer ${tokenObj.token}`)
       .expect(200);
 
-    expect(response.body).toBeDefined();
-
-    /*
     const body = response.body;
-
-    expect(body.length).toBe(1);
-    expect(body[0].title).toBe("My post title"); 
-    */
+    expect(body).toBeDefined();
   });
 }, 20000);
 
