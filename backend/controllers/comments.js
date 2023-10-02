@@ -1,13 +1,21 @@
-const commentRouter = require("express").Router();
+const commentRouter = require("express").Router({ mergeParams: true });
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 
 commentRouter.get("/", async (request, response, next) => {
   try {
-    const params = request.params;
-    console.log("Params: ", params);
+    console.log(request.params);
+    const { postId } = request.params;
 
-    const post = await Post.findById(params.postId).populate({
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return response
+        .status(404)
+        .json({ error: `No post with id ${postId} found` });
+    }
+
+    await post.populate({
       path: "comments",
       populate: {
         path: "childComments",
