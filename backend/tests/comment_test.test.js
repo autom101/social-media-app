@@ -42,7 +42,6 @@ describe("When a user, testing_user, is logged in", () => {
       .expect(200);
 
     const postBody = post.body[0];
-    console.log(postBody);
     expect(postBody).toBeDefined();
 
     const response = await api
@@ -52,11 +51,29 @@ describe("When a user, testing_user, is logged in", () => {
 
     const body = response.body;
     expect(body).toBeDefined();
-    expect(1).toBe(2);
   });
 
   test("a user can post a comment on an existing post", async () => {
-    //
+    const post = await api
+      .get("/api/posts")
+      .set("Authorization", `Bearer ${tokenObj.token}`)
+      .expect(200);
+
+    const postBody = post.body[0];
+    expect(postBody).toBeDefined();
+
+    const content = "Testing comment on post";
+
+    const response = await api
+      .post(`/api/posts/${postBody.id}/comments`)
+      .set("Authorization", `Bearer ${tokenObj.token}`)
+      .send({ content })
+      .expect(201);
+
+    const body = response.body;
+    console.log(body);
+    expect(body).toBeDefined();
+    expect(body.content).toBe(content);
   });
 }, 20000);
 

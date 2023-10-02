@@ -4,7 +4,6 @@ const Post = require("../models/post");
 
 commentRouter.get("/", async (request, response, next) => {
   try {
-    console.log(request.params);
     const { postId } = request.params;
 
     const post = await Post.findById(postId);
@@ -39,7 +38,7 @@ commentRouter.post("/", async (request, response, next) => {
     const newComment = new Comment({
       author: request.user,
       parentComment: null,
-      content: request.content,
+      content: request.body.content,
       createdAt: new Date().getTime(),
       edited: false,
       editedAt: null,
@@ -66,7 +65,7 @@ commentRouter.post("/:subCommentId", async (request, response, next) => {
     const newComment = new Comment({
       author: request.user,
       parentComment: parentComment,
-      content: request.content,
+      content: request.body.content,
       createdAt: new Date().getTime(),
       edited: false,
       editedAt: null,
