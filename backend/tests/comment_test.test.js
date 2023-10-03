@@ -71,9 +71,47 @@ describe("When a user, testing_user, is logged in", () => {
       .expect(201);
 
     const body = response.body;
-    console.log(body);
     expect(body).toBeDefined();
     expect(body.content).toBe(content);
+  });
+
+  test("a user can post a comment on an existing comment", async () => {
+    const post = await api
+      .get("/api/posts")
+      .set("Authorization", `Bearer ${tokenObj.token}`)
+      .expect(200);
+
+    const postBody = post.body[0];
+    expect(postBody).toBeDefined();
+
+    const parentContent = "Testing comment on post";
+    const childContent = "Comment on comment";
+
+    const parentComment = await api
+      .post(`/api/posts/${postBody.id}/comments`)
+      .set("Authorization", `Bearer ${tokenObj.token}`)
+      .send({ content: parentContent })
+      .expect(201);
+
+    const parent = parentComment.body;
+
+    const childComment = await api
+      .post(`/api/posts/${postBody.id}/comments/${parent.id}`)
+      .set("Authorization", `Bearer ${tokenObj.token}`)
+      .send({ content: childContent })
+      .expect(201);
+
+    const parentAfterChild = await Comment.findById(parent.id).populate(
+      "childComments"
+    );
+
+    const child = childComment.body;
+
+    expect(parent).toBeDefined();
+    expect(child).toBeDefined();
+    expect(parent.content).toBe(parentContent);
+    expect(child.content).toBe(childContent);
+    expect(parentAfterChild.childComments[0].content).toBe(childContent);
   });
 }, 20000);
 

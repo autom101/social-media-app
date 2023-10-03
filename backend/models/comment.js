@@ -17,10 +17,12 @@ const commentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Comment",
   },
-  childComments: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Comment",
-  },
+  childComments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
   content: {
     type: String,
   },

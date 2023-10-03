@@ -47,7 +47,7 @@ commentRouter.post("/", async (request, response, next) => {
 
     const savedComment = await newComment.save();
 
-    post.comments = [...comments, savedComment];
+    post.comments = [...comments, savedComment._id.toString()];
     const savedPost = await post.save();
 
     return response.status(201).json(savedComment);
@@ -59,12 +59,18 @@ commentRouter.post("/", async (request, response, next) => {
 commentRouter.post("/:subCommentId", async (request, response, next) => {
   try {
     const id = request.params.subCommentId;
-    const parentComment = await Comment.findById(id).populate("childComments");
+    const parentComment = await Comment.findById(id);
+
+    if (!parentComment) {
+      return response
+        .status(404)
+        .json({ error: `No comment with id ${id} found on the post` });
+    }
     const { childComments } = parentComment;
 
     const newComment = new Comment({
       author: request.user,
-      parentComment: parentComment,
+      parentComment: parentComment._id.toString(),
       content: request.body.content,
       createdAt: new Date().getTime(),
       edited: false,
@@ -74,10 +80,13 @@ commentRouter.post("/:subCommentId", async (request, response, next) => {
 
     const savedNewChildComment = await newComment.save();
 
-    parentComment.childComments = [...childComments, savedNewChildComment];
+    parentComment.childComments = [
+      ...childComments,
+      savedNewChildComment._id.toString(),
+    ];
     const savedParentComment = await parentComment.save();
 
-    return response.status(201).json(savedParentComment);
+    return response.status(201).json(savedNewChildComment);
   } catch (error) {
     next(error);
   }
