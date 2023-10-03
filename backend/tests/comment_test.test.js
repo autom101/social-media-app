@@ -47,7 +47,8 @@ describe("When a user, testing_user, is logged in", () => {
     const response = await api
       .get(`/api/posts/${postBody.id}/comments`)
       .set("Authorization", `Bearer ${tokenObj.token}`)
-      .expect(200);
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
 
     const body = response.body;
     expect(body).toBeDefined();
@@ -57,7 +58,8 @@ describe("When a user, testing_user, is logged in", () => {
     const post = await api
       .get("/api/posts")
       .set("Authorization", `Bearer ${tokenObj.token}`)
-      .expect(200);
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
 
     const postBody = post.body[0];
     expect(postBody).toBeDefined();
@@ -68,7 +70,8 @@ describe("When a user, testing_user, is logged in", () => {
       .post(`/api/posts/${postBody.id}/comments`)
       .set("Authorization", `Bearer ${tokenObj.token}`)
       .send({ content })
-      .expect(201);
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
 
     const body = response.body;
     expect(body).toBeDefined();
@@ -79,7 +82,8 @@ describe("When a user, testing_user, is logged in", () => {
     const post = await api
       .get("/api/posts")
       .set("Authorization", `Bearer ${tokenObj.token}`)
-      .expect(200);
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
 
     const postBody = post.body[0];
     expect(postBody).toBeDefined();
@@ -91,7 +95,8 @@ describe("When a user, testing_user, is logged in", () => {
       .post(`/api/posts/${postBody.id}/comments`)
       .set("Authorization", `Bearer ${tokenObj.token}`)
       .send({ content: parentContent })
-      .expect(201);
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
 
     const parent = parentComment.body;
 
@@ -99,7 +104,8 @@ describe("When a user, testing_user, is logged in", () => {
       .post(`/api/posts/${postBody.id}/comments/${parent.id}`)
       .set("Authorization", `Bearer ${tokenObj.token}`)
       .send({ content: childContent })
-      .expect(201);
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
 
     const parentAfterChild = await Comment.findById(parent.id).populate(
       "childComments"
@@ -112,6 +118,33 @@ describe("When a user, testing_user, is logged in", () => {
     expect(parent.content).toBe(parentContent);
     expect(child.content).toBe(childContent);
     expect(parentAfterChild.childComments[0].content).toBe(childContent);
+  });
+
+  test("a comment is saved on the user's field when they comment", async () => {
+    const post = await api
+      .get("/api/posts")
+      .set("Authorization", `Bearer ${tokenObj.token}`)
+      .expect(200);
+
+    const postBody = post.body[0];
+    expect(postBody).toBeDefined();
+
+    const content = "Testing comment on post";
+
+    const comment = await api
+      .post(`/api/posts/${postBody.id}/comments`)
+      .set("Authorization", `Bearer ${tokenObj.token}`)
+      .send({ content })
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
+
+    const user = User.findOne({
+      username: testHelper.dummyUserObject.username,
+    }).populate("comments");
+
+    expect(comment).toBeDefined();
+    expect(user.comments.length).toBe(1);
+    expect(user.comments[0]._id.toString()).toBe(comment._id.toString());
   });
 }, 20000);
 
