@@ -63,14 +63,24 @@ commentRouter.post("/", async (request, response, next) => {
 
 commentRouter.post("/:subCommentId", async (request, response, next) => {
   try {
-    const id = request.params.subCommentId;
-    const parentComment = await Comment.findById(id);
+    const user = request.user;
+    const { subCommentId, postId } = request.params;
+    const post = await Post.findById(postId);
 
-    if (!parentComment) {
+    if (!post) {
       return response
         .status(404)
-        .json({ error: `No comment with id ${id} found on the post` });
+        .json({ error: `No post with id ${postId} found` });
     }
+
+    const parentComment = await Comment.findById(subCommentId);
+
+    if (!parentComment) {
+      return response.status(404).json({
+        error: `No comment with id ${subCommentId} found on the post`,
+      });
+    }
+
     const { childComments } = parentComment;
 
     const newComment = new Comment({
@@ -84,12 +94,21 @@ commentRouter.post("/:subCommentId", async (request, response, next) => {
     });
 
     const savedNewChildComment = await newComment.save();
+    const newCommentId = savedNewChildComment._id.toString();
 
-    parentComment.childComments = [
-      ...childComments,
-      savedNewChildComment._id.toString(),
-    ];
-    const savedParentComment = await parentComment.save();
+    parentComment.childComments = [...childComments, newCommentId];
+    user.comments = [...user.comments, newCommentId];
+    post.comments = [...post.comments, newCommentId];
+
+    await post.save({
+      validateModifiedOnly: true,
+    });
+    await parentComment.save({
+      validateModifiedOnly: true,
+    });
+    await user.save({
+      validateModifiedOnly: true,
+    }); //for whatever reason there is a bug with just .save() so it needs this additional modifier
 
     return response.status(201).json(savedNewChildComment);
   } catch (error) {
