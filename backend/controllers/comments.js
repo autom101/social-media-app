@@ -31,6 +31,7 @@ commentRouter.get("/", async (request, response, next) => {
 
 commentRouter.post("/", async (request, response, next) => {
   try {
+    const user = request.user;
     const id = request.params.postId;
     const post = await Post.findById(id).populate("comments");
     const { comments } = post;
@@ -46,9 +47,13 @@ commentRouter.post("/", async (request, response, next) => {
     });
 
     const savedComment = await newComment.save();
-
     post.comments = [...comments, savedComment._id.toString()];
-    const savedPost = await post.save();
+    user.comments = [...user.comments, savedComment._id.toString()];
+
+    await post.save();
+    await user.save({
+      validateModifiedOnly: true,
+    }); //for whatever reason there is a bug with just .save() so it needs this additional modifier
 
     return response.status(201).json(savedComment);
   } catch (error) {

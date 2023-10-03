@@ -138,13 +138,13 @@ describe("When a user, testing_user, is logged in", () => {
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
-    const user = User.findOne({
+    const user = await User.findOne({
       username: testHelper.dummyUserObject.username,
     }).populate("comments");
 
     expect(comment).toBeDefined();
     expect(user.comments.length).toBe(1);
-    expect(user.comments[0]._id.toString()).toBe(comment._id.toString());
+    expect(user.comments[0]._id.toString()).toBe(comment.body.id);
   });
 }, 20000);
 
