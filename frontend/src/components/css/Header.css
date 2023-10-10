@@ -1,4 +1,4 @@
-.header {
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,7 +12,7 @@
   color: #00a89d;
 }
 
-.header h1 {
+.page-header h1 {
   font-size: 2rem;
   background: -webkit-linear-gradient(#ec4899, #fb7185);
   -webkit-background-clip: text;
@@ -20,7 +20,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-.header .person {
+.page-header .person {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -28,15 +28,15 @@
   font-size: 1.25rem;
 }
 
-.header .person h2 {
+.page-header .person h2 {
   line-height: 100%;
 }
 
-.header .header-avatar {
+.page-header .page-header-avatar {
   height: 3rem;
   width: auto;
 }
 
-.header-avatar:hover {
+.page-header-avatar:hover {
   cursor: pointer;
 }

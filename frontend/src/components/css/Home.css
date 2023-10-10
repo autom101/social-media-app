@@ -7,13 +7,13 @@
   display: grid;
   grid-template-columns: 1fr 7fr;
   grid-template-rows: 4rem 1fr;
-  grid-template-areas: "header header" "sidebar view";
+  grid-template-areas: "page-header page-header" "sidebar view";
 
   position: relative;
 }
 
-.header {
-  grid-area: header;
+.page-header {
+  grid-area: page-header;
 }
 
 .sidebar {
