@@ -5,10 +5,11 @@
 
   padding: 0 1rem;
 
-  background-color: #00a89d;
+  background-color: #f9fafb;
+  border-bottom: 1px solid grey;
 
   font-weight: 1000;
-  color: #fefefe;
+  color: #00a89d;
 }
 
 .header h1 {

@@ -5,7 +5,7 @@
   color: #450a0a;
 
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 7fr;
   grid-template-rows: 4rem 1fr;
   grid-template-areas: "header header" "sidebar view";
 
