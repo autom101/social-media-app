@@ -8,7 +8,7 @@ const Post = () => {
         <img className="post-avatar" src="" alt="" />
         <h3 className="post-username">Some random user {id}</h3>
       </div>
-      {/*This is going to contains extra options such as share, save, etc*/}
+      {/*This is going to contain extra options such as share, save, etc*/}
       <div className="post-extra"></div>
       {/*This is going to contain any images and text in the post and when it was created*/}
       <div className="post-content">
