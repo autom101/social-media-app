@@ -3,30 +3,31 @@ import postService from "../services/post";
 
 const initialState = [];
 
-const userReducer = createSlice({
-  name: "user",
+const postReducer = createSlice({
+  name: "post",
   initialState,
   reducers: {
     replacePosts(state, action) {
       state = action.payload;
+      console.log(JSON.parse(JSON.stringify(state)));
     },
     addPost(state, action) {
-      state = [...state, action.payload];
+      state.push(action.payload);
     },
   },
 });
 
-export const { replacePosts, addPost } = userReducer.actions;
+export const { replacePosts, addPost } = postReducer.actions;
 
 export const getAllPosts = (user) => {
   return async (dispatch) => {
     try {
       const posts = await postService.getPosts(user);
-      dispatch(replacePosts(posts));
+      await dispatch(replacePosts(posts));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export default userReducer.reducer;
+export default postReducer.reducer;

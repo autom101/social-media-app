@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPosts } from "../reducers/postReducer";
 
@@ -8,17 +8,11 @@ const MyPosts = () => {
   const posts = useSelector((state) => state.posts);
 
   useEffect(() => {
-    const updatePosts = async () => {
-      await dispatch(getAllPosts(userVal));
-      return posts;
-    };
+    dispatch(getAllPosts(userVal.userInfo));
+    console.log(posts);
+  }); // [dispatch, posts, userVal.userInfo]
 
-    updatePosts();
-  }, [dispatch, userVal]);
-
-  console.log(posts);
-
-  return <div>MyPosts</div>;
+  return <div>{posts ? posts[0] : "No posts to show at this time"}</div>;
 };
 
 export default MyPosts;
