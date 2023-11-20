@@ -1,29 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 import postService from "../services/post";
 
-const initialState = [];
+const initialState = {
+  postsList: [],
+  isLoading: true,
+};
 
 const postReducer = createSlice({
-  name: "post",
+  name: "posts",
   initialState,
   reducers: {
-    replacePosts(state, action) {
-      state = action.payload;
-      console.log(JSON.parse(JSON.stringify(state)));
+    addInitialPosts(state, action) {
+      state.postsList = action.payload;
     },
     addPost(state, action) {
-      state.push(action.payload);
+      state.postsList.push(action.payload);
     },
   },
 });
 
-export const { replacePosts, addPost } = postReducer.actions;
+export const { addInitialPosts, addPost } = postReducer.actions;
 
-export const getAllPosts = (user) => {
+export const getInitialPosts = (user) => {
   return async (dispatch) => {
     try {
-      const posts = await postService.getPosts(user);
-      await dispatch(replacePosts(posts));
+      const posts = await postService.getPosts(user.userInfo);
+      await dispatch(addInitialPosts(posts));
+      return posts;
     } catch (err) {
       console.log(err);
     }

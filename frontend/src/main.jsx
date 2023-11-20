@@ -12,7 +12,7 @@ import App from "./App.jsx";
 const store = configureStore({
   reducer: {
     user: userReducer,
-    post: postReducer,
+    posts: postReducer,
   },
 });
 

@@ -1,12 +1,11 @@
 import { useParams } from "react-router-dom";
 
 const Post = () => {
-  const { id } = useParams();
   return (
     <article className="post-container">
       <div className="post-info">
         <img className="post-avatar" src="" alt="" />
-        <h3 className="post-username">Some random user {id}</h3>
+        <h3 className="post-username">Some random user</h3>
       </div>
       {/*This is going to contain extra options such as share, save, etc*/}
       <div className="post-extra"></div>
