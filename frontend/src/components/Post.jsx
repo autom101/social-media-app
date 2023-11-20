@@ -1,28 +1,29 @@
-import { useParams } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import "./css/Post.css";
 
-const Post = () => {
+const Post = ({ post }) => {
+  console.log(post);
+
   return (
-    <article className="post-container">
-      <div className="post-info">
+    <article className="post-container flex">
+      <div className="post-info flex">
         <img className="post-avatar" src="" alt="" />
-        <h3 className="post-username">Some random user</h3>
+        <h3>Some random user</h3>
       </div>
       {/*This is going to contain extra options such as share, save, etc*/}
-      <div className="post-extra"></div>
-      {/*This is going to contain any images and text in the post and when it was created*/}
-      <div className="post-content">
-        <p>
-          Whatever text is on the post that is eventually going to get cut off
-          at some point.
-        </p>
-        <h4 className="post-time-created">Posted this at: 6 pm</h4>
+      <div className="post-content flex">
+        <p>{post.title}</p>
+      </div>
+      {/* */}
+      <div className="post-extra flex">
+        <h4 className="post-time-created flex">
+          {new Date(post.createdAt).toLocaleTimeString("en-US")}
+        </h4>
       </div>
       {/*This is going to contain the like button and comments*/}
-      <div className="post-options">
+      <div className="post-options flex">
         <button className="post-like-btn">Like</button>
-        <a className="post-comments-link" href="#">
-          This will lead to comments
-        </a>
+        <a href="#">This will lead to comments</a>
       </div>
     </article>
   );

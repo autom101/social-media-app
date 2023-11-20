@@ -1,3 +1,5 @@
+import Post from "./Post";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInitialPosts } from "../reducers/postReducer";
@@ -9,18 +11,21 @@ const PostsList = () => {
   const posts = postsState.postsList;
 
   useEffect(() => {
+    //get posts from the backend
     const getPosts = () => {
       dispatch(getInitialPosts(user));
     };
 
     getPosts();
-  }, [dispatch, user, postsState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
+      {/*Only display posts if it is an array, and it is defined*/}
       {Array.isArray(posts)
         ? posts.map((post) => {
-            return <p key={post.id}>{post.title}</p>;
+            return <Post key={post.id} post={post}></Post>;
           })
         : "No posts to display"}
     </div>
