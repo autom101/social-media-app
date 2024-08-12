@@ -9,6 +9,8 @@ import {
 
 import { useSelector } from "react-redux";
 import { Login, Home } from "./components";
+import { ThemeProvider } from "@mui/material";
+import theme from "./theme";
 
 /* Contains various routes that load different components based on the url.
 
@@ -19,22 +21,24 @@ const App = () => {
   const { isLoggedIn } = user;
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/home" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/home/*" element={<Home />} />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? (
+                <Navigate to="/home" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/home/*" element={<Home />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 };
 
