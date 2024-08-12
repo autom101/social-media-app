@@ -7,3 +7,4 @@ export { default as Header } from "./Header.jsx";
 export { default as MyPosts } from "./MyPosts.jsx";
 export { default as SavedPosts } from "./SavedPosts.jsx";
 export { default as Settings } from "./Settings.jsx";
+export { default as SidebarLink } from "./SidebarLink.jsx";

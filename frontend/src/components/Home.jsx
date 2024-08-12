@@ -13,7 +13,7 @@ import { Container, Grid } from "@mui/material";
 
 const Home = () => {
   return (
-    <Container maxWidth="xl" disableGutters="true">
+    <Container maxWidth="xl" disableGutters>
       <Grid container spacing="2">
         <Grid item xs={12}>
           <Header />
