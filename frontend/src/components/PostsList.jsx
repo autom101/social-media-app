@@ -1,8 +1,10 @@
-import Post from "./Post";
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInitialPosts } from "../reducers/postReducer";
+
+import { Stack } from "@mui/material";
+
+import Post from "./Post";
 
 const PostsList = () => {
   const dispatch = useDispatch();
@@ -21,14 +23,14 @@ const PostsList = () => {
   }, []);
 
   return (
-    <div>
-      {/*Only display posts if it is an array, and it is defined*/}
+    <Stack spacing={{ xs: 2, md: 3 }}>
+      {/*Only display posts if it has been loaded*/}
       {Array.isArray(posts)
         ? posts.map((post) => {
             return <Post key={post.id} post={post}></Post>;
           })
         : "No posts to display"}
-    </div>
+    </Stack>
   );
 };
 
