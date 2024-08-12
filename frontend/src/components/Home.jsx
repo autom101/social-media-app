@@ -9,10 +9,11 @@ import {
   SavedPosts,
   Settings,
 } from "../components";
+import { Container } from "@mui/material";
 
 const Home = () => {
   return (
-    <div id="home">
+    <Container maxWidth="xl" disableGutters="true">
       <Header />
       <Sidebar />
       <div className="view">
@@ -24,7 +25,7 @@ const Home = () => {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
-    </div>
+    </Container>
   );
 };
 

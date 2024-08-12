@@ -10,7 +10,7 @@
      - Posts created by user
      - Saved posts
      - Settings
-   - A Feed page on the right where a user can see all posts ever created in cronological order
+   - A Feed page on the right where a user can see all posts ever created in chronological order
 
 ## Future stuff to do:
 
