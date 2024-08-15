@@ -15,7 +15,7 @@ const likePost = () => {
   console.log("Liked");
 };
 
-const NewPost = ({ post }) => {
+const Post = ({ post }) => {
   return (
     <Card component="article" sx={{ backgroundColor: "background.post" }}>
       <CardHeader
@@ -42,4 +42,4 @@ const NewPost = ({ post }) => {
   );
 };
 
-export default NewPost;
+export default Post;
