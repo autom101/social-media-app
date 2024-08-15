@@ -7,7 +7,7 @@ const Post = ({ post }) => {
     <Paper
       elevation={2}
       component="article"
-      sx={{ backgroundColor: "#eefff3" }}
+      sx={{ backgroundColor: "background.post" }}
     >
       <article className="post-container flex">
         <div className="post-info flex">

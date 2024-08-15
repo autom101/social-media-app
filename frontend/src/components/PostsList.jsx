@@ -5,6 +5,7 @@ import { getInitialPosts } from "../reducers/postReducer";
 import { Stack } from "@mui/material";
 
 import Post from "./Post";
+import NewPost from "./NewPost";
 
 const PostsList = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,11 @@ const PostsList = () => {
       {Array.isArray(posts)
         ? posts.map((post) => {
             return <Post key={post.id} post={post}></Post>;
+          })
+        : "No posts to display"}
+      {Array.isArray(posts)
+        ? posts.map((post) => {
+            return <NewPost key={post.id} post={post}></NewPost>;
           })
         : "No posts to display"}
     </Stack>
