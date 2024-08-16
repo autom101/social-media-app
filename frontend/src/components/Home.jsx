@@ -9,29 +9,28 @@ import {
   SavedPosts,
   Settings,
 } from "../components";
-import { Container, Grid } from "@mui/material";
+
+import Grid from "@mui/material/Grid";
 
 const Home = () => {
   return (
-    <Container maxWidth="xl" disableGutters>
-      <Grid container spacing="2">
-        <Grid item xs={12}>
-          <Header />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Sidebar />
-        </Grid>
-        <Grid item xs={12} md={9}>
-          <Routes>
-            <Route path="/" element={<PostsList />} />
-            <Route path="/:id" element={<Post />} />
-            <Route path="/myposts" element={<MyPosts />} />
-            <Route path="/saved" element={<SavedPosts />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </Grid>
+    <Grid container maxWidth="lg" mx="auto">
+      <Grid item xs={12}>
+        <Header />
       </Grid>
-    </Container>
+      <Grid item xs={12} md={3}>
+        <Sidebar />
+      </Grid>
+      <Grid item xs={12} md={9}>
+        <Routes>
+          <Route path="/" element={<PostsList />} />
+          <Route path="/:id" element={<Post />} />
+          <Route path="/myposts" element={<MyPosts />} />
+          <Route path="/saved" element={<SavedPosts />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </Grid>
+    </Grid>
   );
 };
 

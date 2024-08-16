@@ -17,7 +17,11 @@ const likePost = () => {
 
 const Post = ({ post }) => {
   return (
-    <Card component="article" sx={{ backgroundColor: "background.post" }}>
+    <Card
+      component="article"
+      sx={{ backgroundColor: "background.post" }}
+      elevation={1}
+    >
       <CardHeader
         avatar={
           <Avatar>

@@ -23,8 +23,8 @@ const PostsList = () => {
   }, []);
 
   return (
-    <Stack spacing={{ xs: 2, md: 3 }}>
-      {/*Only display posts if it has been loaded*/}
+    <Stack gap={3}>
+      {/*Only display posts if they are loaded*/}
       {Array.isArray(posts)
         ? posts.map((post) => {
             return <Post key={post.id} post={post}></Post>;
