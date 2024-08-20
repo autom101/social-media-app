@@ -10,7 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import { Login, Home } from "./components";
 import { ThemeProvider } from "@mui/material";
-import theme from "./theme";
+import theme from "./utils/theme";
 
 /* Contains various routes that load different components based on the url.
 
