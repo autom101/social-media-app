@@ -2,7 +2,7 @@ import "./css/Home.css";
 import { Routes, Route } from "react-router-dom";
 import {
   Header,
-  Sidebar,
+  Navigation,
   PostsList,
   Post,
   MyPosts,
@@ -18,8 +18,8 @@ const Home = () => {
       <Grid item xs={12}>
         <Header />
       </Grid>
-      <Grid item xs={0} md={3}>
-        <Sidebar />
+      <Grid item xs={12} md={3}>
+        <Navigation />
       </Grid>
       <Grid item xs={12} md={9}>
         <Routes>
