@@ -1,18 +1,9 @@
 const postRouter = require("express").Router();
 const Post = require("../models/post");
 
-postRouter.get("/", async (request, response, next) => {
-  try {
-    const posts = await Post.find({});
-    return response.json(posts);
-  } catch (error) {
-    next(error);
-  }
-});
-
 postRouter.get("/:id", async (request, response, next) => {
   try {
-    const { id } = req.params;
+    const { id } = request.params;
 
     if (!id) {
       return response
@@ -20,13 +11,22 @@ postRouter.get("/:id", async (request, response, next) => {
         .json({ message: "Please provide a valid id" });
     }
 
-    const post = await Post.findOne({ id: id });
+    const post = await Post.findById(id);
 
     if (!post) {
       return response.status(404);
     }
 
     return response.json(post);
+  } catch (error) {
+    next(error);
+  }
+});
+
+postRouter.get("/", async (request, response, next) => {
+  try {
+    const posts = await Post.find({});
+    return response.json(posts);
   } catch (error) {
     next(error);
   }
