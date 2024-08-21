@@ -58,4 +58,38 @@ postRouter.post("/", async (request, response, next) => {
   }
 });
 
+postRouter.patch("/:id", async (request, response, next) => {
+  try {
+    const { id } = request.params;
+    const body = request.body;
+
+    if (!id) {
+      return response
+        .status(400)
+        .json({ message: "Please provide a valid id" });
+    }
+
+    if (!body) {
+      return response
+        .status(400)
+        .json({ message: "Please provide a valid change" });
+    }
+
+    const exists = await Post.findById(id);
+
+    if (!exists) {
+      return response.status(404);
+    }
+
+    const post = await Post.findByIdAndUpdate(id, body, {
+      runValidators: true,
+      new: true,
+    });
+
+    return response.json(post);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = postRouter;
