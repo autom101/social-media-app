@@ -7,6 +7,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 import { Link } from "react-router-dom";
 
+import { LINKS as BottomBarLinks } from "../utils/links";
+
 const BottomBar = () => {
   const [value, setValue] = useState("");
 
@@ -30,30 +32,15 @@ const BottomBar = () => {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction
-          label="Home"
-          icon={<HomeIcon />}
-          component={Link}
-          to="/"
-        />
-        <BottomNavigationAction
-          label="My Posts"
-          icon={<GradeIcon />}
-          component={Link}
-          to="myposts"
-        />
-        <BottomNavigationAction
-          label="Saved"
-          icon={<BookmarkIcon />}
-          component={Link}
-          to="saved"
-        />
-        <BottomNavigationAction
-          label="Settings"
-          icon={<SettingsIcon />}
-          component={Link}
-          to="settings"
-        />
+        {BottomBarLinks.map(({ name, to, Icon }, index) => (
+          <BottomNavigationAction
+            key={`bBar-${index}`}
+            label={name}
+            to={to}
+            icon={<Icon />}
+            component={Link}
+          ></BottomNavigationAction>
+        ))}
       </BottomNavigation>
     </Paper>
   );
