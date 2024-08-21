@@ -33,6 +33,25 @@ describe("", () => {
       .expect(200);
   });
 
+  test("attempt to get a specific post with a token provided succeeds", async () => {
+    const loginResponse = await api
+      .post("/api/login")
+      .send(testHelper.dummyUserObject);
+
+    const token = loginResponse.body.token;
+
+    const post = await api
+      .post("/api/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ title: "My Post" })
+      .expect(201);
+
+    await api
+      .get(`/api/posts/${post.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+  });
+
   test("attempt to create a post with a valid token succeeds", async () => {
     const loginResponse = await api
       .post("/api/login")

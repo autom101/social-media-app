@@ -22,12 +22,6 @@ const userSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
-  savedPosts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    },
-  ],
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
