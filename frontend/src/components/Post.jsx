@@ -7,7 +7,6 @@ import {
   Avatar,
   Typography,
   IconButton,
-  Link,
 } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
@@ -38,9 +37,6 @@ const Post = ({ post }) => {
         <IconButton aria-label="Like" onClick={likePost}>
           <ThumbUpIcon></ThumbUpIcon>
         </IconButton>
-        <Link sx={{ ml: "auto" }} className="Link">
-          Show comments
-        </Link>
       </CardActions>
     </Card>
   );

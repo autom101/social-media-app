@@ -1,5 +1,3 @@
-import "./css/Header.css";
-
 import { useState } from "react";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import { useSelector } from "react-redux";
