@@ -40,18 +40,22 @@ describe("", () => {
 
     const token = loginResponse.body.token;
 
-    const post = await api
+    const initialResponse = await api
       .post("/api/posts")
       .set("Authorization", `Bearer ${token}`)
       .send({ title: "My Post" })
       .expect(201);
 
+    const postId = await initialResponse.body.id;
+
     const samePost = await api
-      .get(`/api/posts/${post.id}`)
+      .get(`/api/posts/${postId}`)
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
 
-    expect(post.id).toEqual(samePost.id);
+    const samePostId = await samePost.body.id;
+
+    expect(postId).toEqual(samePostId);
   });
 
   test("attempt to create a post with a valid token succeeds", async () => {
