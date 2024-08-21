@@ -1,9 +1,5 @@
 import { useState } from "react";
 import { Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import GradeIcon from "@mui/icons-material/Grade";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import SettingsIcon from "@mui/icons-material/Settings";
 
 import { Link } from "react-router-dom";
 
