@@ -10,6 +10,28 @@ postRouter.get("/", async (request, response, next) => {
   }
 });
 
+postRouter.get("/:id", async (request, response, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return response
+        .status(400)
+        .json({ message: "Please provide a valid id" });
+    }
+
+    const post = await Post.findOne({ id: id });
+
+    if (!post) {
+      return response.status(404);
+    }
+
+    return response.json(post);
+  } catch (error) {
+    next(error);
+  }
+});
+
 postRouter.post("/", async (request, response, next) => {
   try {
     const user = request.user;

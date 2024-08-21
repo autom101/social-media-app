@@ -46,10 +46,12 @@ describe("", () => {
       .send({ title: "My Post" })
       .expect(201);
 
-    await api
+    const samePost = await api
       .get(`/api/posts/${post.id}`)
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
+
+    expect(post.id).toEqual(samePost.id);
   });
 
   test("attempt to create a post with a valid token succeeds", async () => {
