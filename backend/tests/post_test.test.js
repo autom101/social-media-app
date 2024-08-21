@@ -74,6 +74,38 @@ describe("", () => {
     expect(post.body).toBeDefined();
     expect(post.body.title).toBe("My Post");
   });
+
+  test("attempt to edit an existing post with a valid token succeeds", async () => {
+    const initialTitle = "My Post";
+    const changedTitle = "Not My Post";
+
+    const loginResponse = await api
+      .post("/api/login")
+      .send(testHelper.dummyUserObject);
+
+    const token = loginResponse.body.token;
+
+    const initialResponse = await api
+      .post("/api/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ title: initialTitle })
+      .expect(201);
+
+    const post = await initialResponse.body;
+
+    expect(post.title).toBe(initialTitle);
+
+    const patchedResponse = await api
+      .patch(`/api/posts/${post.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ title: changedTitle })
+      .expect(200);
+
+    const samePost = await patchedResponse.body;
+
+    expect(post.id).toEqual(samePost.id);
+    expect(samePost.title).toEqual(changedTitle);
+  });
 }, 20000);
 
 afterAll(async () => {
