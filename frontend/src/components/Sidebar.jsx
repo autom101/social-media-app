@@ -7,6 +7,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 import SidebarLink from "./SidebarLink";
 
+import { LINKS } from "../utils/links";
+
 const Sidebar = () => {
   return (
     <Box>
@@ -19,18 +21,11 @@ const Sidebar = () => {
           },
         }}
       >
-        <ListItem disablePadding>
-          <SidebarLink to="" text="Home" icon={<HomeIcon />} />
-        </ListItem>
-        <ListItem disablePadding>
-          <SidebarLink to="myposts" text="My Posts" icon={<GradeIcon />} />
-        </ListItem>
-        <ListItem disablePadding>
-          <SidebarLink to="saved" text="Saved" icon={<BookmarkIcon />} />
-        </ListItem>
-        <ListItem disablePadding>
-          <SidebarLink to="settings" text="Settings" icon={<SettingsIcon />} />
-        </ListItem>
+        {LINKS.map(({ to, name, Icon }, index) => (
+          <ListItem key={index} disablePadding>
+            <SidebarLink to={to} text={name} icon={<Icon />} />
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
