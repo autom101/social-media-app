@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import postService from "../services/post";
+import likeService from "../services/like";
 
 const initialState = {
   postsList: [],
@@ -16,10 +17,17 @@ const postReducer = createSlice({
     addPost(state, action) {
       state.postsList.push(action.payload);
     },
+    likePost(state, action) {
+      const { id } = action.payload;
+      const likedPost = state.postsList.find((post) => post.id === id);
+      if (likedPost) {
+        likedPost.likes += 1;
+      }
+    },
   },
 });
 
-export const { addInitialPosts, addPost } = postReducer.actions;
+export const { addInitialPosts, addPost, likePost } = postReducer.actions;
 
 export const getInitialPosts = (user) => {
   return async (dispatch) => {
@@ -28,7 +36,18 @@ export const getInitialPosts = (user) => {
       await dispatch(addInitialPosts(posts));
       return posts;
     } catch (err) {
-      console.log(err);
+      console.error(err);
+    }
+  };
+};
+
+export const updateLikedPost = (user, postId) => {
+  return async (dispatch) => {
+    try {
+      await likeService.likePost(user.userInfo, postId);
+      await dispatch(likePost(postId));
+    } catch (err) {
+      console.error(err);
     }
   };
 };
