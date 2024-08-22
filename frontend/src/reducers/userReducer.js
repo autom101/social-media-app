@@ -3,12 +3,22 @@ import loginService from "../services/login";
 
 const user = localStorage.getItem("user");
 
+const userIsNotNull = user !== null;
+const userExistsInLocalStorage = JSON.parse(user) !== null;
+
+const expiryTime = JSON.parse(user)
+  ? new Date(JSON.parse(user).issuedAt) + 24 * 60 * 60 * 1000
+  : new Date("2099-12-30T00:00:00Z").getTime();
+const userTokenIsNotExpired = expiryTime < new Date().getTime();
+
 const initialState =
-  user !== null && JSON.parse(user) !== null
+  userIsNotNull && userExistsInLocalStorage && userTokenIsNotExpired
     ? { isLoggedIn: true, userInfo: JSON.parse(user) }
     : { isLoggedIn: false, userInfo: null };
 
-/* Defines the reducer and action creaters for the user state. Is mainly used to check if user is already logged in, and to update the user value upon successful or unsuccessful logins. */
+console.log(initialState);
+
+/* Defines the reducer and action creators for the user state. Is mainly used to check if user is already logged in, and to update the user value upon successful or unsuccessful logins. */
 const userReducer = createSlice({
   name: "user",
   initialState,

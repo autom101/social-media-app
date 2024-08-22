@@ -1,11 +1,5 @@
-import { Routes, Route } from "react-router-dom";
-import {
-  Header,
-  Navigation,
-  PostsList,
-  MyPosts,
-  Settings,
-} from "../components";
+import { Outlet } from "react-router-dom";
+import { Header, Navigation } from "../components";
 
 import Grid from "@mui/material/Grid";
 
@@ -19,11 +13,7 @@ const Home = () => {
         <Navigation />
       </Grid>
       <Grid item xs={12} md={9}>
-        <Routes>
-          <Route path="/" element={<PostsList />} />
-          <Route path="/myposts" element={<MyPosts />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
+        <Outlet />
       </Grid>
     </Grid>
   );
