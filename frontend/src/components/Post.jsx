@@ -1,4 +1,9 @@
 /* eslint-disable react/prop-types */
+// redux and reducers imports
+import { useDispatch, useSelector } from "react-redux";
+import { updateLikedPost } from "../reducers/postReducer";
+
+// mui imports
 import {
   Card,
   CardHeader,
@@ -10,11 +15,14 @@ import {
 } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
-const likePost = () => {
-  //
-};
-
 const Post = ({ post }) => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const likePost = async () => {
+    dispatch(updateLikedPost(user, post.id));
+  };
+
   return (
     <Card
       component="article"
