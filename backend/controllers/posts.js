@@ -1,5 +1,7 @@
 const postRouter = require("express").Router();
 const Post = require("../models/post");
+const User = require("../models/user");
+const Likes = require("../models/likes");
 
 postRouter.get("/:id", async (request, response, next) => {
   try {
@@ -61,6 +63,7 @@ postRouter.post("/", async (request, response, next) => {
 postRouter.patch("/:id/like", async (request, response, next) => {
   try {
     const { id } = request.params;
+    const user = request.user;
 
     if (!id) {
       return response
@@ -74,6 +77,18 @@ postRouter.patch("/:id/like", async (request, response, next) => {
       return response.status(404);
     }
 
+    const userInDb = await User.findOne({ username: user.username });
+    const likeExists = await Likes.findOne({
+      userId: userInDb._id,
+      postId: id,
+    });
+
+    if (likeExists) {
+      return response.status(409).json({
+        message: "The same user can not like the same post multiple times",
+      });
+    }
+
     const newLikes = exists.likes + 1;
 
     const post = await Post.findByIdAndUpdate(
@@ -84,6 +99,10 @@ postRouter.patch("/:id/like", async (request, response, next) => {
         new: true,
       }
     );
+
+    // Make sure we save the "like" to keep a like unique
+    const like = new Likes({ userId: userInDb._id, postId: id });
+    await like.save();
 
     return response.json(post);
   } catch (error) {
