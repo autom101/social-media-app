@@ -174,6 +174,46 @@ describe("", () => {
     expect(post.id).toEqual(samePostBody.id);
     expect(post.likes + 1).toBe(samePostBody.likes);
   });
+
+  test("attempt to remove a like from a post succeeds", async () => {
+    const title = "My Post";
+
+    const loginResponse = await api
+      .post("/api/login")
+      .send(testHelper.dummyUserObject);
+
+    const token = loginResponse.body.token;
+
+    const initialResponse = await api
+      .post("/api/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ title })
+      .expect(201);
+
+    const post = await initialResponse.body;
+
+    // add like
+    await api
+      .post(`/api/posts/${post.id}/like`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    // remove like
+    await api
+      .delete(`/api/posts/${post.id}/like`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(204);
+
+    const samePost = await api
+      .get(`/api/posts/${post.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const samePostBody = await samePost.body;
+
+    expect(post.id).toEqual(samePostBody.id);
+    expect(post.likes).toBe(samePostBody.likes);
+  });
 }, 20000);
 
 afterAll(async () => {
