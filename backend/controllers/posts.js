@@ -1,7 +1,7 @@
 const postRouter = require("express").Router();
 const Post = require("../models/post");
 const User = require("../models/user");
-const Likes = require("../models/likes");
+const Like = require("../models/like");
 
 postRouter.get("/:id", async (request, response, next) => {
   try {
@@ -52,7 +52,7 @@ postRouter.post("/:id/like", async (request, response, next) => {
     }
 
     const userInDb = await User.findOne({ username: user.username });
-    const likeExists = await Likes.findOne({
+    const likeExists = await Like.findOne({
       userId: userInDb._id,
       postId: id,
     });
@@ -75,7 +75,7 @@ postRouter.post("/:id/like", async (request, response, next) => {
     );
 
     // Make sure we save the "like" to keep a like unique
-    const like = new Likes({ userId: userInDb._id, postId: id });
+    const like = new Like({ userId: userInDb._id, postId: id });
     await like.save();
 
     return response.json(post);
