@@ -11,12 +11,10 @@ import {
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 const likePost = () => {
-  console.log("Liked");
+  //
 };
 
 const Post = ({ post }) => {
-  console.log(post);
-  
   return (
     <Card
       component="article"
