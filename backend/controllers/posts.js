@@ -34,33 +34,7 @@ postRouter.get("/", async (request, response, next) => {
   }
 });
 
-postRouter.post("/", async (request, response, next) => {
-  try {
-    const user = request.user;
-
-    const newPost = new Post({
-      title: request.body.title,
-      author: user._id,
-      createdAt: new Date().getTime(),
-      comments: [],
-      likes: 0,
-      likedBy: [],
-      edited: false,
-      editedAt: null,
-    });
-
-    const savedPost = await newPost.save();
-
-    user.posts = [...user.posts, savedPost._id.toString()];
-    const returnedUser = await user.save();
-
-    return response.status(201).json(savedPost);
-  } catch (error) {
-    next(error);
-  }
-});
-
-postRouter.patch("/:id/like", async (request, response, next) => {
+postRouter.post("/:id/like", async (request, response, next) => {
   try {
     const { id } = request.params;
     const user = request.user;
@@ -105,6 +79,32 @@ postRouter.patch("/:id/like", async (request, response, next) => {
     await like.save();
 
     return response.json(post);
+  } catch (error) {
+    next(error);
+  }
+});
+
+postRouter.post("/", async (request, response, next) => {
+  try {
+    const user = request.user;
+
+    const newPost = new Post({
+      title: request.body.title,
+      author: user._id,
+      createdAt: new Date().getTime(),
+      comments: [],
+      likes: 0,
+      likedBy: [],
+      edited: false,
+      editedAt: null,
+    });
+
+    const savedPost = await newPost.save();
+
+    user.posts = [...user.posts, savedPost._id.toString()];
+    const returnedUser = await user.save();
+
+    return response.status(201).json(savedPost);
   } catch (error) {
     next(error);
   }

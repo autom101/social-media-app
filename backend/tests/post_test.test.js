@@ -125,7 +125,7 @@ describe("", () => {
     const post = await initialResponse.body;
 
     const patchedResponse = await api
-      .patch(`/api/posts/${post.id}/like`)
+      .post(`/api/posts/${post.id}/like`)
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
 
@@ -154,13 +154,13 @@ describe("", () => {
 
     // first like
     await api
-      .patch(`/api/posts/${post.id}/like`)
+      .post(`/api/posts/${post.id}/like`)
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
 
     // second like
     await api
-      .patch(`/api/posts/${post.id}/like`)
+      .post(`/api/posts/${post.id}/like`)
       .set("Authorization", `Bearer ${token}`)
       .expect(409);
 
