@@ -134,6 +134,46 @@ describe("", () => {
     expect(post.id).toEqual(samePost.id);
     expect(post.likes + 1).toBe(samePost.likes);
   });
+
+  test("multiple attempts to like an existing post by the same user fail after the first attempt", async () => {
+    const title = "My Post";
+
+    const loginResponse = await api
+      .post("/api/login")
+      .send(testHelper.dummyUserObject);
+
+    const token = loginResponse.body.token;
+
+    const initialResponse = await api
+      .post("/api/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ title })
+      .expect(201);
+
+    const post = await initialResponse.body;
+
+    // first like
+    await api
+      .patch(`/api/posts/${post.id}/like`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    // second like
+    await api
+      .patch(`/api/posts/${post.id}/like`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(409);
+
+    const samePost = await api
+      .get(`/api/posts/${post.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const samePostBody = await samePost.body;
+
+    expect(post.id).toEqual(samePostBody.id);
+    expect(post.likes + 1).toBe(samePostBody.likes);
+  });
 }, 20000);
 
 afterAll(async () => {

@@ -61,7 +61,6 @@ postRouter.post("/", async (request, response, next) => {
 postRouter.patch("/:id/like", async (request, response, next) => {
   try {
     const { id } = request.params;
-    const body = request.body;
 
     if (!id) {
       return response
