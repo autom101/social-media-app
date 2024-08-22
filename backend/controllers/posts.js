@@ -144,4 +144,54 @@ postRouter.patch("/:id", async (request, response, next) => {
   }
 });
 
+postRouter.delete("/:id/like", async (request, response, next) => {
+  try {
+    const { id } = request.params;
+    const user = request.user;
+
+    if (!id) {
+      return response
+        .status(400)
+        .json({ message: "Please provide a valid id" });
+    }
+
+    const exists = await Post.findById(id);
+
+    if (!exists) {
+      return response
+        .status(404)
+        .json({ message: `The post with id ${id} does not exist` });
+    }
+
+    const userInDb = await User.findOne({ username: user.username });
+    const likeExists = await Like.findOne({
+      userId: userInDb._id,
+      postId: id,
+    });
+
+    if (!likeExists) {
+      return response.status(409).json({
+        message: "The user has not liked this post yet",
+      });
+    }
+
+    const newLikes = exists.likes - 1;
+
+    await Post.findByIdAndUpdate(
+      id,
+      { likes: newLikes },
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+
+    // Remove the "like"
+    await Like.findByIdAndDelete(likeExists.id);
+
+    return response.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = postRouter;
