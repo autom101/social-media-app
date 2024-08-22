@@ -1,6 +1,5 @@
 import { useState } from "react";
-import PersonSharpIcon from "@mui/icons-material/PersonSharp";
-
+import { useSelector } from "react-redux";
 import {
   AppBar,
   Avatar,
@@ -13,8 +12,10 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
   const [logoutAnchor, setLogoutAnchor] = useState(null);
 
   const handleOpenLogoutMenu = (e) => {
