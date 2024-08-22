@@ -19,8 +19,7 @@ loginRouter.post("/", async (request, response, next) => {
     //If a user cannot be found, or the password is incorrect then we send a 401 back
     if (user === null || !passwordCorrect) {
       return response.status(401).json({
-        error:
-          "Username and password provided do not correspond to any user in the database",
+        error: "Invalid username or password",
       });
     }
 
@@ -28,12 +27,18 @@ loginRouter.post("/", async (request, response, next) => {
       name: user.name,
       username: username,
     };
-    //Since user exists and password is correct, send a token that expires in 24 hrs from time of issue
-    const token = jwt.sign(tokenUser, config.SECRET_STRING);
 
-    return response
-      .status(201)
-      .send({ token, name: user.name, username, issuedAt: Date.now() });
+    //Since user exists and password is correct, send a token that expires in 24 hrs from time of issue
+    const token = jwt.sign(tokenUser, config.SECRET_STRING, {
+      expiresIn: "24h",
+    });
+
+    return response.json({
+      token,
+      name: user.name,
+      username,
+      issuedAt: Date.now(),
+    });
   } catch (error) {
     next(error);
   }
