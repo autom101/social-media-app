@@ -15,6 +15,8 @@ const likePost = () => {
 };
 
 const Post = ({ post }) => {
+  console.log(post);
+  
   return (
     <Card
       component="article"

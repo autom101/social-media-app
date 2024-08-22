@@ -3,9 +3,7 @@ import {
   Header,
   Navigation,
   PostsList,
-  Post,
   MyPosts,
-  SavedPosts,
   Settings,
 } from "../components";
 
@@ -23,9 +21,7 @@ const Home = () => {
       <Grid item xs={12} md={9}>
         <Routes>
           <Route path="/" element={<PostsList />} />
-          <Route path="/:id" element={<Post />} />
           <Route path="/myposts" element={<MyPosts />} />
-          <Route path="/saved" element={<SavedPosts />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </Grid>
