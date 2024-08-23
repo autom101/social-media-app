@@ -1,6 +1,5 @@
 const postRouter = require("express").Router();
 const Post = require("../models/post");
-const User = require("../models/user");
 const Like = require("../models/like");
 
 postRouter.get("/:id", async (request, response, next) => {
@@ -8,15 +7,15 @@ postRouter.get("/:id", async (request, response, next) => {
     const { id } = request.params;
 
     if (!id) {
-      return response
-        .status(400)
-        .json({ message: "Please provide a valid id" });
+      return response.status(400).json({ error: "Please provide a valid id" });
     }
 
     const post = await Post.findById(id);
 
     if (!post) {
-      return response.status(404);
+      return response
+        .status(404)
+        .json({ error: `Post with id ${id} was not found` });
     }
 
     return response.json(post);
@@ -40,26 +39,25 @@ postRouter.post("/:id/like", async (request, response, next) => {
     const user = request.user;
 
     if (!id) {
-      return response
-        .status(400)
-        .json({ message: "Please provide a valid id" });
+      return response.status(400).json({ error: "Please provide a valid id" });
     }
 
     const exists = await Post.findById(id);
 
     if (!exists) {
-      return response.status(404);
+      return response
+        .status(404)
+        .json({ error: "The post you are looking for does not exist" });
     }
 
-    const userInDb = await User.findOne({ username: user.username });
     const likeExists = await Like.findOne({
-      userId: userInDb._id,
+      userId: user._id,
       postId: id,
     });
 
     if (likeExists) {
       return response.status(409).json({
-        message: "The same user can not like the same post multiple times",
+        error: "The same user can not like the same post multiple times",
       });
     }
 
@@ -150,9 +148,7 @@ postRouter.delete("/:id/like", async (request, response, next) => {
     const user = request.user;
 
     if (!id) {
-      return response
-        .status(400)
-        .json({ message: "Please provide a valid id" });
+      return response.status(400).json({ error: "Please provide a valid id" });
     }
 
     const exists = await Post.findById(id);
@@ -160,18 +156,17 @@ postRouter.delete("/:id/like", async (request, response, next) => {
     if (!exists) {
       return response
         .status(404)
-        .json({ message: `The post with id ${id} does not exist` });
+        .json({ error: `The post with id ${id} does not exist` });
     }
 
-    const userInDb = await User.findOne({ username: user.username });
     const likeExists = await Like.findOne({
-      userId: userInDb._id,
+      userId: user._id,
       postId: id,
     });
 
     if (!likeExists) {
       return response.status(409).json({
-        message: "The user has not liked this post yet",
+        error: "The user has not liked this post yet",
       });
     }
 
