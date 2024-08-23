@@ -52,7 +52,7 @@ export const logoutUser = () => {
     try {
       dispatch(updateUser(null));
       dispatch(modifyIsLoggedIn(false));
-      localStorage.setItem("user", "");
+      localStorage.removeItem("user");
     } catch (err) {
       console.error(err);
     }

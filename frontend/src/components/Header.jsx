@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   AppBar,
   Avatar,
@@ -13,8 +14,10 @@ import {
   Typography,
 } from "@mui/material";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
+import { logoutUser } from "../reducers/userReducer";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [logoutAnchor, setLogoutAnchor] = useState(null);
 
@@ -24,6 +27,10 @@ const Header = () => {
 
   const handleCloseLogoutMenu = () => {
     setLogoutAnchor(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
   };
 
   return (
@@ -61,7 +68,7 @@ const Header = () => {
               open={Boolean(logoutAnchor)}
               onClose={handleCloseLogoutMenu}
             >
-              <MenuItem>
+              <MenuItem onClick={handleLogout}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
