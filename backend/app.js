@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const rateLimit = require("express-rate-limit");
+
 const config = require("./utils/config");
 
 const logger = require("./utils/logger");
@@ -28,6 +30,15 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(
+  rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    limit: 100, // Set a limit of 100 IP requests per 10 minutes
+    message: "Your limit for the past 10 minutes has been reached",
+    standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  })
+);
 app.use(cookieParser());
 app.use(middleware.requestHandler);
 
