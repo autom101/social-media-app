@@ -22,7 +22,6 @@ const userReducer = createSlice({
       return { ...state, userInfo: userObj };
     },
     modifyIsLoggedIn(state, action) {
-      console.log("Change to: " + action.payload);
       return { ...state, isLoggedIn: action.payload };
     },
   },

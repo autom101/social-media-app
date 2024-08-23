@@ -22,15 +22,11 @@ const Login = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const user = { username: username.value, password: password.value };
-    console.log(user);
     clearForm([username, password]);
     let success = await dispatch(loginUser(user));
 
     if (success) {
-      console.log("successful login");
       navigate("/home");
-    } else {
-      console.log("failed login");
     }
   };
 
