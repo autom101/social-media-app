@@ -60,11 +60,11 @@ loginRouter.post("/", async (request, response, next) => {
 
 loginRouter.post("/refresh", async (request, response, next) => {
   try {
-    const { refreshToken } = request.body;
+    const { refreshToken } = request.cookies.refreshToken;
 
     if (!refreshToken) {
       return response
-        .status(400)
+        .status(401)
         .json({ error: "Please provide a refresh token" });
     }
   } catch (error) {

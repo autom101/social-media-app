@@ -21,7 +21,12 @@ logger.informationLog(`Connecting to mongoose on: `, url);
 mongoose.connect(url);
 
 // Basic Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: config.ORIGIN,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(middleware.requestHandler);
