@@ -47,4 +47,16 @@ export const loginUser = (user) => {
   };
 };
 
+export const logoutUser = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateUser(null));
+      dispatch(modifyIsLoggedIn(false));
+      localStorage.setItem("user", "");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
+
 export default userReducer.reducer;
