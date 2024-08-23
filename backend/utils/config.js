@@ -1,10 +1,16 @@
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3003;
-const SECRET_STRING = process.env.SECRET;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const MONGODB_URI =
   process.env.NODE_ENV === "test"
     ? process.env.TEST_MONGODB_URI
     : process.env.MONGODB_URI;
 
-module.exports = { PORT, SECRET_STRING, MONGODB_URI };
+module.exports = {
+  PORT,
+  REFRESH_TOKEN_SECRET,
+  ACCESS_TOKEN_SECRET,
+  MONGODB_URI,
+};

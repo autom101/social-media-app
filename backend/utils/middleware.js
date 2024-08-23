@@ -27,9 +27,9 @@ const tokenExtractor = (request, response, next) => {
 const userExtractor = async (request, response, next) => {
   const token = request.token || "";
   try {
-    const decodedToken = jwt.verify(token, process.env.SECRET);
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     if (decodedToken.username) {
-      const user = await User.findOne({ username: decodedToken.username });
+      const user = await User.findById(decodedToken.id);
       request.user = user;
     }
   } catch (error) {
