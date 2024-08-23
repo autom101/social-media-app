@@ -67,6 +67,32 @@ loginRouter.post("/refresh", async (request, response, next) => {
         .status(401)
         .json({ error: "Please provide a refresh token" });
     }
+
+    // refresh token using jwt (move to middleware later)
+    const decodedToken = await jwt.verify(
+      refreshToken,
+      config.REFRESH_TOKEN_SECRET
+    );
+
+    if (!decodedToken.refreshToken) {
+      return response.status(403).json({ error: "Invalid refresh token" });
+    }
+
+    const user = { ...decodedToken };
+
+    const tokenUser = {
+      id: user.id,
+      name: user.name,
+      username: username,
+    };
+
+    const accessToken = jwt.sign(tokenUser, config.ACCESS_TOKEN_SECRET, {
+      expiresIn: "15m",
+    });
+
+    return response
+      .status(201)
+      .json({ ...tokenUser, token: accessToken, issuedAt: Date.now() });
   } catch (error) {
     next(error);
   }
