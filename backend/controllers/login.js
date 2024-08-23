@@ -44,4 +44,8 @@ loginRouter.post("/", async (request, response, next) => {
   }
 });
 
+loginRouter.post("/refresh", async (request, response, next) => {
+  //
+});
+
 module.exports = loginRouter;
