@@ -73,7 +73,7 @@ postRouter.post("/:id/like", async (request, response, next) => {
     );
 
     // Make sure we save the "like" to keep a like unique
-    const like = new Like({ userId: userInDb._id, postId: id });
+    const like = new Like({ userId: user._id, postId: id });
     await like.save();
 
     return response.json(post);
@@ -114,21 +114,21 @@ postRouter.patch("/:id", async (request, response, next) => {
     const body = request.body;
 
     if (!id) {
-      return response
-        .status(400)
-        .json({ message: "Please provide a valid id" });
+      return response.status(400).json({ error: "Please provide a valid id" });
     }
 
     if (!body) {
       return response
         .status(400)
-        .json({ message: "Please provide a valid change" });
+        .json({ error: "Please provide a valid change" });
     }
 
     const exists = await Post.findById(id);
 
     if (!exists) {
-      return response.status(404);
+      return response
+        .status(404)
+        .json({ error: `Post with id ${id} does not exist` });
     }
 
     const post = await Post.findByIdAndUpdate(id, body, {
@@ -189,4 +189,5 @@ postRouter.delete("/:id/like", async (request, response, next) => {
     next(error);
   }
 });
+
 module.exports = postRouter;
