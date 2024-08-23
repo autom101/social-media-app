@@ -23,19 +23,22 @@ loginRouter.post("/", async (request, response, next) => {
       });
     }
 
+    // Since user exists and password is correct, send a token that expires in 24 hrs from time of issue
+    const issueDate = Math.floor(Date.now() / 1000);
+
     const tokenUser = {
       id: user._id,
       name: user.name,
       username: username,
+      iat: issueDate,
     };
 
-    // Since user exists and password is correct, send a token that expires in 24 hrs from time of issue
     const accessToken = jwt.sign(tokenUser, config.ACCESS_TOKEN_SECRET, {
       expiresIn: "15m",
     });
 
     const refreshToken = jwt.sign(tokenUser, config.REFRESH_TOKEN_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "30d",
     });
 
     // save the refresh token as a cookie
@@ -51,7 +54,7 @@ loginRouter.post("/", async (request, response, next) => {
       id: user._id,
       name: user.name,
       username,
-      issuedAt: Date.now(),
+      issuedAt: issueDate,
     });
   } catch (error) {
     next(error);
@@ -60,7 +63,7 @@ loginRouter.post("/", async (request, response, next) => {
 
 loginRouter.post("/refresh", async (request, response, next) => {
   try {
-    const { refreshToken } = request.cookies.refreshToken;
+    const { refreshToken } = request.cookies;
 
     if (!refreshToken) {
       return response
@@ -74,25 +77,31 @@ loginRouter.post("/refresh", async (request, response, next) => {
       config.REFRESH_TOKEN_SECRET
     );
 
-    if (!decodedToken.refreshToken) {
+    if (!decodedToken) {
       return response.status(403).json({ error: "Invalid refresh token" });
     }
 
     const user = { ...decodedToken };
+    const issueDate = Math.floor(Date.now() / 1000);
 
     const tokenUser = {
       id: user.id,
       name: user.name,
-      username: username,
+      username: user.username,
+      iat: issueDate,
     };
 
     const accessToken = jwt.sign(tokenUser, config.ACCESS_TOKEN_SECRET, {
       expiresIn: "15m",
     });
 
-    return response
-      .status(201)
-      .json({ ...tokenUser, token: accessToken, issuedAt: Date.now() });
+    return response.status(201).json({
+      token: accessToken,
+      id: tokenUser.id,
+      name: tokenUser.name,
+      username: tokenUser.username,
+      issuedAt: issueDate,
+    });
   } catch (error) {
     next(error);
   }
