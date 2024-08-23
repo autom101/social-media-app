@@ -53,7 +53,7 @@ const errorHandler = (error, request, response, next) => {
   } else if (error.name === "JsonWebTokenError") {
     return response.status(401).json({ error: "Please provide a valid token" });
   } else if (error.name === "TokenExpiredError") {
-    return response.status(401).json({ error: "You token has expired" });
+    return response.status(401).json({ error: "Your token has expired" });
   }
 
   next(error);
