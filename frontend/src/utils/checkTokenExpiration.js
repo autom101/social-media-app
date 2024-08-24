@@ -3,8 +3,7 @@ export const checkUserTokenExpiration = (user) => {
   try {
     const parsedUser = JSON.parse(user);
     if (parsedUser && parsedUser.issuedAt) {
-      expiryTime =
-        new Date(parsedUser.issuedAt).getTime() + 24 * 60 * 60 * 1000;
+      expiryTime = parsedUser.issuedAt + 15 * 60;
     } else {
       expiryTime = new Date("2099-12-30T00:00:00Z").getTime();
     }
@@ -12,5 +11,5 @@ export const checkUserTokenExpiration = (user) => {
     expiryTime = new Date("2099-12-30T00:00:00Z").getTime();
   }
 
-  return expiryTime;
+  return expiryTime > new Date() / 1000;
 };

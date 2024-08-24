@@ -3,9 +3,8 @@ import loginService from "../services/login";
 import { checkUserTokenExpiration } from "../utils/checkTokenExpiration";
 
 const user = localStorage.getItem("user");
-const expiryTime = checkUserTokenExpiration(user);
 
-const validUserToken = expiryTime > Date.now();
+const validUserToken = checkUserTokenExpiration(user);
 
 const initialState = validUserToken
   ? { isLoggedIn: true, userInfo: JSON.parse(user) }
