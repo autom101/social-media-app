@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import loginService from "../services/login";
-import { checkUserTokenExpiration } from "../utils/checkTokenExpiration";
+import { getUser } from "../utils/jwtHelper";
 
-const user = localStorage.getItem("user");
+const user = getUser();
 
-const validUserToken = checkUserTokenExpiration(user);
-
-const initialState = validUserToken
-  ? { isLoggedIn: true, userInfo: JSON.parse(user) }
+const initialState = user
+  ? { isLoggedIn: true, userInfo: user }
   : { isLoggedIn: false, userInfo: null };
 
 /* Defines the reducer and action creators for the user state. Is mainly used to check if user is already logged in, and to update the user value upon successful or unsuccessful logins. */
