@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import loginService from "../services/login";
-import { getUser } from "../utils/jwtHelper";
+import { getUser, removeUser, saveUser } from "../utils/jwtHelper";
 
 const user = getUser();
 
@@ -15,7 +15,7 @@ const userReducer = createSlice({
   reducers: {
     updateUser(state, action) {
       const userObj = action.payload;
-      localStorage.setItem("user", JSON.stringify(userObj));
+      saveUser(userObj);
       return { ...state, userInfo: userObj };
     },
     modifyIsLoggedIn(state, action) {
@@ -33,11 +33,14 @@ export const loginUser = (user) => {
       const userReturned = await loginService.login(user);
       dispatch(updateUser(userReturned));
       dispatch(modifyIsLoggedIn(true));
-      localStorage.setItem("user", JSON.stringify(userReturned));
+
+      saveUser(userReturned);
+
       return true;
     } catch (error) {
       dispatch(updateUser(null));
       dispatch(modifyIsLoggedIn(false));
+
       return false;
     }
   };
@@ -48,7 +51,8 @@ export const logoutUser = () => {
     try {
       dispatch(updateUser(null));
       dispatch(modifyIsLoggedIn(false));
-      localStorage.removeItem("user");
+
+      removeUser();
     } catch (err) {
       console.error(err);
     }
