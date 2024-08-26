@@ -9,7 +9,7 @@ import postReducer from "./reducers/postReducer.js";
 //
 import App from "./App.jsx";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     user: userReducer,
     posts: postReducer,

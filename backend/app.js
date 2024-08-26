@@ -30,16 +30,17 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser());
+
 app.use(
   rateLimit({
     windowMs: 10 * 60 * 1000, // 10 minutes
     limit: 100, // Set a limit of 100 IP requests per 10 minutes
     message: "Your limit for the past 10 minutes has been reached",
-    standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
   })
 );
-app.use(cookieParser());
 app.use(middleware.requestHandler);
 
 // Routes

@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { store } from "../main";
 import loginService from "../services/login";
-import { getUser, removeUser, saveUser } from "../utils/jwtHelper";
+import jwtHelper from "../utils/jwtHelper";
 
-const user = getUser();
+const user = jwtHelper.getUser();
 
 const initialState = user
   ? { isLoggedIn: true, userInfo: user }
@@ -15,7 +16,7 @@ const userReducer = createSlice({
   reducers: {
     updateUser(state, action) {
       const userObj = action.payload;
-      saveUser(userObj);
+      jwtHelper.saveUser(userObj);
       return { ...state, userInfo: userObj };
     },
     modifyIsLoggedIn(state, action) {
@@ -27,6 +28,11 @@ const userReducer = createSlice({
 export const { updateUser, modifyIsLoggedIn } = userReducer.actions;
 
 /* Attempt to login user. Update local state to a user object if successful, or null if not successful */
+const saveUser = async (user) => {
+  store.dispatch(updateUser(user));
+  store.dispatch(modifyIsLoggedIn(true));
+};
+
 export const loginUser = (user) => {
   return async (dispatch) => {
     try {
@@ -34,7 +40,7 @@ export const loginUser = (user) => {
       dispatch(updateUser(userReturned));
       dispatch(modifyIsLoggedIn(true));
 
-      saveUser(userReturned);
+      jwtHelper.saveUser(userReturned);
 
       return true;
     } catch (error) {
@@ -52,11 +58,23 @@ export const logoutUser = () => {
       dispatch(updateUser(null));
       dispatch(modifyIsLoggedIn(false));
 
-      removeUser();
+      jwtHelper.removeUser();
     } catch (err) {
       console.error(err);
     }
   };
+};
+
+export const isValidUser = async (user) => {
+  const expiredToken = jwtHelper.isExpired(user);
+  let newUser;
+
+  if (expiredToken) {
+    newUser = jwtHelper.getUser();
+    await saveUser();
+  }
+
+  return newUser;
 };
 
 export default userReducer.reducer;

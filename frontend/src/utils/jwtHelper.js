@@ -1,11 +1,28 @@
+import loginService from "../services/login";
 const DEFAULT_EXPIRATION = new Date("2099-12-30T00:00:00Z").getTime() / 1000;
 
-export const checkUserTokenExpiration = (user) => {
+const getNewToken = async () => {
+  try {
+    const data = await loginService.refreshToken();
+
+    return data;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+export const isExpired = (user) => {
+  // Logic: if the user does not exist or the user is null, then we can treat the token as being expired
+  if (!user) {
+    return true;
+  }
+
   let expiryTime;
   try {
     if (user.issuedAt) {
       // 15 minute expiry
-      expiryTime = user.issuedAt + 15 * 60;
+      expiryTime = user.issuedAt + 1 * 60;
     } else {
       expiryTime = DEFAULT_EXPIRATION;
     }
@@ -13,22 +30,30 @@ export const checkUserTokenExpiration = (user) => {
     expiryTime = DEFAULT_EXPIRATION;
   }
 
-  console.log(user.issuedAt);
+  const tokenIsExpired = expiryTime < new Date() / 1000;
 
-  return expiryTime > new Date() / 1000;
+  return tokenIsExpired;
+};
+
+const getUserFromLocalStorage = () => {
+  const userInLocalStorage = localStorage.getItem("user");
+  const user = userInLocalStorage ? JSON.parse(userInLocalStorage) : {};
+
+  return user;
 };
 
 export const getUser = () => {
-  const existingUser = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : {};
+  let user = getUserFromLocalStorage();
 
-  let validUserToken = false;
-  if (existingUser) {
-    validUserToken = checkUserTokenExpiration(existingUser);
+  const validToken = isExpired(user);
+
+  if (!validToken) {
+    removeUser();
+    user = getNewToken();
+    saveUser(user);
   }
 
-  return validUserToken ? existingUser : null;
+  return validToken && user ? user : null;
 };
 
 export const saveUser = (user) => {
