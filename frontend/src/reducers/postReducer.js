@@ -33,10 +33,13 @@ export const { addInitialPosts, addPost, likePost } = postReducer.actions;
 export const getInitialPosts = (user) => {
   return async (dispatch) => {
     try {
-      const validUser = await isValidUser(user);
-      if (!validUser) return {};
+      const { userInfo } = user;
 
-      const posts = await postService.getPosts(validUser.userInfo);
+      const validUserInfo = await isValidUser(userInfo);
+      if (!validUserInfo) return {};
+
+      const posts = await postService.getPosts(validUserInfo);
+
       await dispatch(addInitialPosts(posts));
       return posts;
     } catch (err) {

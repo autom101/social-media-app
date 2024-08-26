@@ -34,7 +34,7 @@ loginRouter.post("/", async (request, response, next) => {
     };
 
     const accessToken = jwt.sign(tokenUser, config.ACCESS_TOKEN_SECRET, {
-      expiresIn: "1m",
+      expiresIn: "15m",
     });
 
     const refreshToken = jwt.sign(tokenUser, config.REFRESH_TOKEN_SECRET, {

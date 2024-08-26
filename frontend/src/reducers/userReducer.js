@@ -3,7 +3,7 @@ import { store } from "../main";
 import loginService from "../services/login";
 import jwtHelper from "../utils/jwtHelper";
 
-const user = jwtHelper.getUser();
+const user = jwtHelper.getUserFromLocalStorage();
 
 const initialState = user
   ? { isLoggedIn: true, userInfo: user }
@@ -45,10 +45,9 @@ export const loginUser = (user) => {
       dispatch(updateUser(userReturned));
       dispatch(modifyIsLoggedIn(true));
 
-      jwtHelper.saveUser(userReturned);
-
       return true;
     } catch (error) {
+      console.log("Failed to login");
       dispatch(updateUser(null));
       dispatch(modifyIsLoggedIn(false));
 
@@ -75,16 +74,18 @@ export const isValidUser = async (user) => {
   let newUser;
 
   if (expiredToken) {
-    newUser = jwtHelper.getUser();
+    newUser = await jwtHelper.getUser();
   }
 
   if (newUser) {
     await saveUser(newUser);
-  } else {
-    removeUser();
   }
 
-  return newUser;
+  if (!newUser && expiredToken) {
+    await removeUser();
+  }
+
+  return expiredToken ? newUser : user;
 };
 
 export default userReducer.reducer;

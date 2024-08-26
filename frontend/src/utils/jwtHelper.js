@@ -7,12 +7,11 @@ const getNewToken = async () => {
 
     return data;
   } catch (err) {
-    console.error(err);
     return null;
   }
 };
 
-export const isExpired = (user) => {
+const isExpired = (user) => {
   // Logic: if the user does not exist or the user is null, then we can treat the token as being expired
   if (!user) {
     return true;
@@ -22,7 +21,7 @@ export const isExpired = (user) => {
   try {
     if (user.issuedAt) {
       // 15 minute expiry
-      expiryTime = user.issuedAt + 1 * 60;
+      expiryTime = user.issuedAt + 15 * 60;
     } else {
       expiryTime = DEFAULT_EXPIRATION;
     }
@@ -42,24 +41,31 @@ const getUserFromLocalStorage = () => {
   return user;
 };
 
-export const getUser = () => {
+const getUser = async () => {
   let user = getUserFromLocalStorage();
 
-  const validToken = isExpired(user);
+  const expiredToken = isExpired(user);
 
-  if (!validToken) {
-    removeUser();
-    user = getNewToken();
-    saveUser(user);
+  if (expiredToken) {
+    user = await getNewToken();
   }
 
-  return validToken && user ? user : null;
+  return user;
 };
 
-export const saveUser = (user) => {
+const saveUser = (user) => {
+  if (!user) return;
   localStorage.setItem("user", JSON.stringify(user));
 };
 
-export const removeUser = () => {
+const removeUser = () => {
   localStorage.removeItem("user");
+};
+
+export default {
+  isExpired,
+  getUser,
+  getUserFromLocalStorage,
+  removeUser,
+  saveUser,
 };
