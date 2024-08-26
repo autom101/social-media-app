@@ -4,8 +4,9 @@ import loginService from "../services/login";
 import jwtHelper from "../utils/jwtHelper";
 
 const user = jwtHelper.getUserFromLocalStorage();
+const validUser = Object.keys(user).length > 0;
 
-const initialState = user
+const initialState = validUser
   ? { isLoggedIn: true, userInfo: user }
   : { isLoggedIn: false, userInfo: null };
 
@@ -82,6 +83,7 @@ export const isValidUser = async (user) => {
   }
 
   if (!newUser && expiredToken) {
+    console.log("uh...");
     await removeUser();
   }
 

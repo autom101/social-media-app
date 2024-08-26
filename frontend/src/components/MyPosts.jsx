@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInitialPosts } from "../reducers/postReducer";
-
 import { Stack } from "@mui/material";
 
 import Post from "./Post";
