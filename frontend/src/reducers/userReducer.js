@@ -33,6 +33,11 @@ const saveUser = async (user) => {
   store.dispatch(modifyIsLoggedIn(true));
 };
 
+const removeUser = async () => {
+  store.dispatch(updateUser(null));
+  store.dispatch(modifyIsLoggedIn(false));
+};
+
 export const loginUser = (user) => {
   return async (dispatch) => {
     try {
@@ -71,7 +76,12 @@ export const isValidUser = async (user) => {
 
   if (expiredToken) {
     newUser = jwtHelper.getUser();
-    await saveUser();
+  }
+
+  if (newUser) {
+    await saveUser(newUser);
+  } else {
+    removeUser();
   }
 
   return newUser;
