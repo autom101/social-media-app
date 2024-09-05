@@ -43,7 +43,7 @@ describe("", () => {
     const initialResponse = await api
       .post("/api/posts")
       .set("Authorization", `Bearer ${token}`)
-      .send({ title: "My Post" })
+      .send({ title: "My Post", content: "My Content" })
       .expect(201);
 
     const postId = await initialResponse.body.id;
@@ -68,7 +68,7 @@ describe("", () => {
     const post = await api
       .post("/api/posts")
       .set("Authorization", `Bearer ${token}`)
-      .send({ title: "My Post" })
+      .send({ title: "My Post", content: "My Content" })
       .expect(201);
 
     expect(post.body).toBeDefined();
@@ -88,7 +88,7 @@ describe("", () => {
     const initialResponse = await api
       .post("/api/posts")
       .set("Authorization", `Bearer ${token}`)
-      .send({ title: initialTitle })
+      .send({ title: "My Post", content: "My Content" })
       .expect(201);
 
     const post = await initialResponse.body;
@@ -108,8 +108,6 @@ describe("", () => {
   });
 
   test("attempt to like an existing post with a valid token succeeds", async () => {
-    const title = "My Post";
-
     const loginResponse = await api
       .post("/api/login")
       .send(testHelper.dummyUserObject);
@@ -119,7 +117,7 @@ describe("", () => {
     const initialResponse = await api
       .post("/api/posts")
       .set("Authorization", `Bearer ${token}`)
-      .send({ title })
+      .send({ title: "My Post", content: "My Content" })
       .expect(201);
 
     const post = await initialResponse.body;
@@ -136,8 +134,6 @@ describe("", () => {
   });
 
   test("multiple attempts to like an existing post by the same user fail after the first attempt", async () => {
-    const title = "My Post";
-
     const loginResponse = await api
       .post("/api/login")
       .send(testHelper.dummyUserObject);
@@ -147,7 +143,7 @@ describe("", () => {
     const initialResponse = await api
       .post("/api/posts")
       .set("Authorization", `Bearer ${token}`)
-      .send({ title })
+      .send({ title: "My Post", content: "My Content" })
       .expect(201);
 
     const post = await initialResponse.body;
@@ -176,8 +172,6 @@ describe("", () => {
   });
 
   test("attempt to remove a like from a post succeeds", async () => {
-    const title = "My Post";
-
     const loginResponse = await api
       .post("/api/login")
       .send(testHelper.dummyUserObject);
@@ -187,7 +181,7 @@ describe("", () => {
     const initialResponse = await api
       .post("/api/posts")
       .set("Authorization", `Bearer ${token}`)
-      .send({ title })
+      .send({ title: "My Post", content: "My Content" })
       .expect(201);
 
     const post = await initialResponse.body;
