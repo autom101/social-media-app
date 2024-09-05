@@ -85,9 +85,11 @@ postRouter.post("/:id/like", async (request, response, next) => {
 postRouter.post("/", async (request, response, next) => {
   try {
     const user = request.user;
+    const { title, content } = request.body;
 
     const newPost = new Post({
-      title: request.body.title,
+      title: title,
+      content: content,
       author: user._id,
       createdAt: new Date().getTime(),
       comments: [],
