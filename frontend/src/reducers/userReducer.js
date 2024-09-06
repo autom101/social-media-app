@@ -83,7 +83,6 @@ export const isValidUser = async (user) => {
   }
 
   if (!newUser && expiredToken) {
-    console.log("uh...");
     await removeUser();
   }
 
