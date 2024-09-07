@@ -11,4 +11,14 @@ const getPosts = async (userInfo) => {
   return response.data;
 };
 
-export default { getPosts };
+const createPost = async (userInfo, postInfo) => {
+  const response = await axios.post(url, postInfo, {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  });
+
+  return response.data;
+};
+
+export default { getPosts, createPost };
