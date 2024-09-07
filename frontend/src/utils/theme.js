@@ -4,7 +4,7 @@ const theme = createTheme({
   palette: {
     background: {
       post: "#eefff3",
-      postForm: "#e0ffff",
+      postForm: "#B7F5D7",
       headingTitle: "-webkit-linear-gradient(#ec4899, #fb7185)",
     },
     text: {
