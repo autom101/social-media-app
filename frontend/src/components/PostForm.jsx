@@ -8,11 +8,28 @@ import {
   Typography,
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useField } from "../hooks";
+import { useDispatch } from "react-redux";
+import { addNewPost } from "../reducers/postReducer";
 
 const PostForm = () => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const title = useField("");
+  const content = useField("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await dispatch(addNewPost({ title, content }));
+    e.target.clear();
+    title.clear();
+    content.clear();
+    console.log("Hi");
+  };
 
   return (
     <>
@@ -43,6 +60,7 @@ const PostForm = () => {
             borderRadius: "2rem",
             backgroundColor: "background.postForm",
           }}
+          onSubmit={handleSubmit}
         >
           <Typography variant="h4" component="p">
             Create Post
@@ -52,6 +70,8 @@ const PostForm = () => {
               helperText="Please provide a post title"
               label="Title"
               id="form-post-title"
+              value={title.value}
+              onChange={title.onChange}
               fullWidth
             />
           </FormControl>
@@ -60,6 +80,8 @@ const PostForm = () => {
               helperText="Please provide post content"
               label="Content"
               id="form-post-content"
+              value={content.value}
+              onChange={content.onChange}
               fullWidth
             />
           </FormControl>
@@ -71,6 +93,7 @@ const PostForm = () => {
               width: "7rem",
               backgroundColor: "#06D6A0",
             }}
+            type="submit"
           >
             Submit
           </Button>
