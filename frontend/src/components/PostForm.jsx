@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useField } from "../hooks";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNewPost } from "../reducers/postReducer";
 
 const PostForm = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -24,11 +25,12 @@ const PostForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(addNewPost({ title, content }));
-    e.target.clear();
+    await dispatch(
+      addNewPost(user, { title: title.value, content: content.value })
+    );
     title.clear();
     content.clear();
-    console.log("Hi");
+    handleClose();
   };
 
   return (
