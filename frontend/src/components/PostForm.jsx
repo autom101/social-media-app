@@ -2,7 +2,15 @@ import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
 
 const PostForm = () => {
   return (
-    <Box component="form" sx={{ m: 1, p: 1, border: "1px solid black" }}>
+    <Box
+      component="form"
+      sx={{
+        m: 1,
+        p: 1,
+        borderRadius: "2rem",
+        backgroundColor: "background.post",
+      }}
+    >
       <Typography variant="h4" component="p">
         Create Post
       </Typography>
