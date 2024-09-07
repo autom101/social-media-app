@@ -6,7 +6,7 @@ const PostForm = () => {
       component="form"
       sx={{
         m: 1,
-        p: 1,
+        p: 2,
         borderRadius: "2rem",
         backgroundColor: "background.post",
       }}

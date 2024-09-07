@@ -18,7 +18,7 @@ const Post = ({ post }) => {
   return (
     <Card
       component="article"
-      sx={{ backgroundColor: "background.post" }}
+      sx={{ backgroundColor: "background.post", borderRadius: "2rem" }}
       elevation={1}
     >
       <CardHeader
