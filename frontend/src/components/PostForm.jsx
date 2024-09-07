@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const PostForm = () => {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,18 @@ const PostForm = () => {
 
   return (
     <>
-      <Button onClick={handleOpen}>Create Post</Button>
+      <Button
+        onClick={handleOpen}
+        variant="contained"
+        color="success"
+        sx={{
+          mt: "0.5rem",
+        }}
+        size="large"
+        endIcon={<ChevronRightIcon />}
+      >
+        Create Post
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
