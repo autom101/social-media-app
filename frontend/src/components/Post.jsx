@@ -9,12 +9,17 @@ import {
   IconButton,
 } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-
-const likePost = () => {
-  //
-};
+import { updateLikedPost } from "../reducers/postReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const Post = ({ post }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const handleLike = () => {
+    dispatch(updateLikedPost(user, post.id));
+  };
+
   return (
     <Card
       component="article"
@@ -34,7 +39,7 @@ const Post = ({ post }) => {
         <Typography>{post.title}</Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Like" onClick={likePost}>
+        <IconButton aria-label="Like" onClick={handleLike}>
           <ThumbUpIcon></ThumbUpIcon>
         </IconButton>
       </CardActions>
