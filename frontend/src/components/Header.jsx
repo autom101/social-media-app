@@ -34,9 +34,9 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ maxHeight: "3rem !important" }}>
       <Container maxWidth="lg">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters variant="dense">
           <Typography variant="h4" component="h1">
             Babble
           </Typography>

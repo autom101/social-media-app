@@ -10,7 +10,7 @@ postRouter.get("/:id", async (request, response, next) => {
       return response.status(400).json({ error: "Please provide a valid id" });
     }
 
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate("likedBy");
 
     if (!post) {
       return response

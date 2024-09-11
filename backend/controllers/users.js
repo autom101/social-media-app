@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 userRouter.get("/", async (request, response, next) => {
   try {
     const users = await User.find({});
-    response.json(users);
+    return response.json(users);
   } catch (error) {
     next(error);
   }
@@ -14,7 +14,6 @@ userRouter.get("/", async (request, response, next) => {
 userRouter.get("/:id/posts", async (request, response, next) => {
   try {
     const { posts } = await User.findById(request.params.id).populate("posts");
-    console.log("in correct place");
     return response.json(posts);
   } catch (error) {
     next(error);
@@ -47,7 +46,7 @@ userRouter.post("/", async (request, response, next) => {
     if (!password.match(passwordRegex)) {
       return response.status(400).json({
         error:
-          "Password must contains at least 1 number, 1 letter, and be at least 8 characters long",
+          "Password must contain at least 1 number, 1 letter, and be at least 8 characters long",
       });
     }
 
