@@ -26,7 +26,7 @@ postRouter.get("/:id", async (request, response, next) => {
 
 postRouter.get("/", async (request, response, next) => {
   try {
-    const posts = await Post.find({});
+    const posts = await Post.find({}).populate("likedBy");
     return response.json(posts);
   } catch (error) {
     next(error);
@@ -63,14 +63,10 @@ postRouter.post("/:id/like", async (request, response, next) => {
 
     const newLikes = exists.likes + 1;
 
-    const post = await Post.findByIdAndUpdate(
-      id,
-      { likes: newLikes },
-      {
-        runValidators: true,
-        new: true,
-      }
-    );
+    const post = await Post.findById(id);
+    post.likes = newLikes;
+    post.likedBy = [...post.likedBy, user._id];
+    await post.save();
 
     // Make sure we save the "like" to keep a like unique
     const like = new Like({ userId: user._id, postId: id });
@@ -102,7 +98,7 @@ postRouter.post("/", async (request, response, next) => {
     const savedPost = await newPost.save();
 
     user.posts = [...user.posts, savedPost._id.toString()];
-    const returnedUser = await user.save();
+    await user.save();
 
     return response.status(201).json(savedPost);
   } catch (error) {
