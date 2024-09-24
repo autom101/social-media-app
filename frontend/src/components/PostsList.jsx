@@ -13,8 +13,6 @@ const PostsList = () => {
   const postsState = useSelector((state) => state.posts);
   const posts = postsState.postsList;
 
-  console.log(posts);
-
   useEffect(() => {
     //get posts from the backend
     const getPosts = () => {

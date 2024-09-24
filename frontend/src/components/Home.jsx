@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 const Home = () => {
   return (
     <Grid container maxWidth="lg" mx="auto">
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ padding: 0, maxHeight: "fit-content" }}>
         <Header />
       </Grid>
       <Grid item xs={12} md={3}>

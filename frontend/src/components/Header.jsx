@@ -34,7 +34,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ maxHeight: "3rem !important" }}>
+    <AppBar position="static">
       <Container maxWidth="lg">
         <Toolbar disableGutters variant="dense">
           <Typography variant="h4" component="h1">

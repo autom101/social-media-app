@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -13,8 +14,13 @@ import { updateLikedPost } from "../reducers/postReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 const Post = ({ post }) => {
+  const [userLiked, setUserLiked] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    console.log(post);
+  }, [userLiked]);
 
   const handleLike = () => {
     dispatch(updateLikedPost(user, post.id));

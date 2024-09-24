@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 // redux imports
 import { configureStore } from "@reduxjs/toolkit";
